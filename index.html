@@ -99,13 +99,6 @@
     margin-bottom: 24px; 
     box-shadow: 0 4px 25px rgba(0,0,0,0.02);
 }
-
-@media screen and (max-width: 768px) {
-    .person-profile-card {
-        grid-template-columns: 1fr !important;
-        padding: 20px !important;
-    }
-}
         /* Адаптивность для открыток на мобилках */
 @media screen and (max-width: 768px) {
     .postcards-grid {
@@ -178,18 +171,36 @@
         body.accessible-mode .card, body.accessible-mode .video-card, body.accessible-mode .book-card, body.accessible-mode .before-after-container { border: 2px solid #FFFF00 !important; margin-bottom: 20px !important; padding: 20px !important; }
         body.accessible-mode .tag, body.accessible-mode button, body.accessible-mode .hero-btn, body.accessible-mode .accessibility-btn { border: 2px solid #FFFF00 !important; background-color: #000000 !important; color: #FFFF00 !important; font-size: 1.1rem !important; font-weight: bold !important; padding: 10px 20px !important; }
 
-        @media screen and (max-width: 768px) {
-            body { padding-left: 0; }
-            .scroll-progress-line { display: none; }
-            header { height: auto; padding: 60px 20px; }
-            .section-title { font-size: 1.2rem; }
-            .site-nav .nav-toggle { display: flex !important; }
-            .site-nav .nav-menu { position: fixed !important; top: var(--nav-height) !important; left: 0 !important; width: 100vw !important; height: calc(100vh - var(--nav-height)) !important; background-color: #F9F8F6 !important; flex-direction: column !important; align-items: center !important; gap: 24px !important; padding: 40px 20px !important; display: none !important; z-index: 10001 !important; }
-            .site-nav .nav-menu.open { display: flex !important; }
-            #kravchenko .card {
-                grid-template-columns: 1fr !important;
-       }
-        }
+       @media screen and (max-width: 768px) {
+    body { padding-left: 0; }
+    .scroll-progress-line { display: none; }
+    header { height: auto; padding: 60px 20px; }
+    .section-title { font-size: 1.2rem; }
+    .site-nav .nav-toggle { display: flex !important; }
+    .site-nav .nav-menu { position: fixed !important; top: var(--nav-height) !important; left: 0 !important; width: 100vw !important; height: calc(100vh - var(--nav-height)) !important; background-color: #F9F8F6 !important; flex-direction: column !important; align-items: center !important; gap: 24px !important; padding: 40px 20px !important; display: none !important; z-index: 10001 !important; }
+    .site-nav .nav-menu.open { display: flex !important; }
+    
+    /* Карточки людей на мобилках: колонка и фото сразу после регалий */
+    .person-profile-card {
+        grid-template-columns: 1fr !important;
+        padding: 20px !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    .person-profile-card > div:first-child {
+        display: flex;
+        flex-direction: column;
+    }
+    .person-profile-card > div:last-child {
+        order: -1 !important;
+        margin-bottom: 20px !important;
+    }
+
+    /* Открытки на мобилках */
+    .postcards-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
     </style>
 </head>
 <body>
