@@ -87,6 +87,25 @@
         .card:hover .tag { background: #FFFFFF; color: var(--accent-vermilion); }
         .card:hover .card-action { opacity: 1; transform: translateY(0); }
 
+        .person-profile-card {
+    background: #ffffff; 
+    border-radius: 20px; 
+    padding: 32px; 
+    border: 1px solid var(--border-color); 
+    display: grid; 
+    grid-template-columns: 1fr 300px; 
+    gap: 32px; 
+    align-items: start; 
+    margin-bottom: 24px; 
+    box-shadow: 0 4px 25px rgba(0,0,0,0.02);
+}
+
+@media screen and (max-width: 768px) {
+    .person-profile-card {
+        grid-template-columns: 1fr !important;
+        padding: 20px !important;
+    }
+}
         /* Слайдер сравнения */
         .before-after-container { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 20px; margin-bottom: 40px; }
         .before-after-slider { position: relative; width: 100%; max-width: 800px; margin: 0 auto; aspect-ratio: 5 / 4; overflow: hidden; border-radius: 14px; user-select: none; background: #ffffff; }
@@ -144,15 +163,12 @@
         .back-to-top { position: fixed; bottom: 30px; right: 30px; width: 48px; height: 48px; background: var(--accent-vermilion); color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-family: var(--font-heading); font-size: 1.2rem; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 100; }
         .back-to-top.show { opacity: 1; visibility: visible; }
 
-        /* Паровозик */
-        .steam-tram { position: fixed; top: 0; left: 0; width: 280px; height: auto; z-index: 999; pointer-events: none; transition: transform 0.1s linear, opacity 0.3s ease; will-change: transform, opacity; }
-
         /* Версия для слабовидящих */
         body.accessible-mode { background-color: #000000 !important; color: #FFFF00 !important; font-size: 1.25rem !important; }
         body.accessible-mode * { background-color: transparent !important; color: #FFFF00 !important; border-color: #FFFF00 !important; box-shadow: none !important; font-family: Arial, sans-serif !important; }
         body.accessible-mode .site-nav { position: relative !important; background: #000000 !important; border-bottom: 2px solid #FFFF00 !important; }
         body.accessible-mode header { height: auto !important; padding: 40px 20px !important; }
-        body.accessible-mode .hero-bg-layer, body.accessible-mode .hero-overlay, body.accessible-mode .scroll-progress-line, body.accessible-mode .steam-tram { display: none !important; }
+        body.accessible-mode .hero-bg-layer, body.accessible-mode .hero-overlay, body.accessible-mode .scroll-progress-line, body.accessible-mode
         body.accessible-mode .card, body.accessible-mode .video-card, body.accessible-mode .book-card, body.accessible-mode .before-after-container { border: 2px solid #FFFF00 !important; margin-bottom: 20px !important; padding: 20px !important; }
         body.accessible-mode .tag, body.accessible-mode button, body.accessible-mode .hero-btn, body.accessible-mode .accessibility-btn { border: 2px solid #FFFF00 !important; background-color: #000000 !important; color: #FFFF00 !important; font-size: 1.1rem !important; font-weight: bold !important; padding: 10px 20px !important; }
 
@@ -161,7 +177,6 @@
             .scroll-progress-line { display: none; }
             header { height: auto; padding: 60px 20px; }
             .section-title { font-size: 1.2rem; }
-            .steam-tram { width: 170px; }
             .site-nav .nav-toggle { display: flex !important; }
             .site-nav .nav-menu { position: fixed !important; top: var(--nav-height) !important; left: 0 !important; width: 100vw !important; height: calc(100vh - var(--nav-height)) !important; background-color: #F9F8F6 !important; flex-direction: column !important; align-items: center !important; gap: 24px !important; padding: 40px 20px !important; display: none !important; z-index: 10001 !important; }
             .site-nav .nav-menu.open { display: flex !important; }
@@ -173,8 +188,6 @@
 </head>
 <body>
 
-<img src="tram.png" id="steamTram" class="steam-tram" alt="Паровой трамвай">
-<img src="troll.png" id="trolleybus" class="steam-tram" alt="Троллейбус">
     <div class="scroll-progress-line"><div class="scroll-progress-fill" id="progressFill"></div></div>
 
     <nav class="site-nav">
@@ -216,7 +229,7 @@
             </div>
 
             <!-- Карточка-портрет (Верхняя часть) без класса .card, чтобы не белел текст при наведении -->
-            <div style="background: #ffffff; border-radius: 20px; padding: 32px; border: 1px solid var(--border-color); display: grid; grid-template-columns: 1fr 300px; gap: 32px; align-items: start; margin-bottom: 24px; box-shadow: 0 4px 25px rgba(0,0,0,0.02);">
+           <div class="person-profile-card">
                 <!-- Текст и инфо -->
                 <div>
                     <span class="tag">Память Лесного</span>
@@ -274,7 +287,7 @@
             </div>
 
             <!-- Карточка-портрет Романа Всеволодова -->
-            <div style="background: #ffffff; border-radius: 20px; padding: 32px; border: 1px solid var(--border-color); display: grid; grid-template-columns: 1fr 300px; gap: 32px; align-items: start; margin-bottom: 24px; box-shadow: 0 4px 25px rgba(0,0,0,0.02);">
+            <div class="person-profile-card">
                 <!-- Текст и инфо -->
                 <div>
                     <span class="tag">Новая история</span>
@@ -616,7 +629,17 @@
             <h3 style="font-size: 1.3rem; font-weight: 700; margin: 36px 0 12px 0; color: #111; border-top: 1px solid #EAEAEA; padding-top: 32px;">Исторические открытки</h3>
             <p style="margin-bottom: 20px; color: #555555;">Архивные почтовые карточки с видами Старо-Парголовского проспекта и проспекта Мориса Тореза</p>    
             <!-- Сетка открыток 2x2 -->
-            <div class="postcards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px;">
+           .postcards-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 24px; 
+}
+
+@media screen and (max-width: 768px) {
+    .postcards-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
                 
                 <!-- Открытка 1 -->
                 <div class="art-card" style="background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #EAEAEA; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column;">
@@ -882,17 +905,21 @@
                     <li><a href="#your-story">07. Ваша история</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
+           <div class="footer-col">
                 <h4>Мы в соцсетях</h4>
-                <a href="https://vk.ru/toreza32" target="_blank" class="social-vk"><span>ВКонтакте</span></a>
-             <div class="logo-placeholders" style="display: flex; flex-direction: column; gap: 14px; margin-top: 10px; align-items: flex-start;">
-    <a href="https://cbsvib.ru/" target="_blank">
-        <img src="logo-lichachev.png" alt="Логотип Библиотеки им. Д. С. Лихачева" style="max-width: 95px; height: auto; filter: brightness(0) invert(1);">
-    </a>
-    <a href="https://cbsvib.ru/" target="_blank">
-        <img src="logo-cbs.png" alt="Логотип ЦБС Выборгского района" style="max-width: 155px; height: auto; filter: brightness(0) invert(1);">
-    </a>
-</div>
+                <div style="margin-top: 14px; margin-bottom: 14px;">
+                    <a href="https://vk.ru/toreza32" target="_blank" class="social-vk"><span>ВКонтакте</span></a>
+                </div>
+                <div class="logo-placeholders" style="display: flex; flex-direction: column; gap: 14px; margin-top: 10px; align-items: flex-start;">
+                    <a href="https://cbsvib.ru/" target="_blank">
+                        <img src="logo-lichachev.png" alt="Логотип Библиотеки им. Д. С. Лихачева" style="max-width: 95px; height: auto; filter: brightness(0) invert(1);">
+                    </a>
+                    <a href="https://cbsvib.ru/" target="_blank">
+                        <img src="logo-cbs.png" alt="Логотип ЦБС Выборгского района" style="max-width: 155px; height: auto; filter: brightness(0) invert(1);">
+                    </a>
+                </div>
+            </div>
+        </div>
         <div class="footer-bottom">
             <div>© 2026 Библиотека им. Д. С. Лихачева</div>
             <button class="accessibility-btn" onclick="toggleAccessibility()">👁 Версия для слабовидящих</button>
@@ -901,7 +928,7 @@
 <!-- Модальное окно для увеличения картин и открыток -->
     <div id="artModal" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; cursor: zoom-out;">
         <span style="position: absolute; top: 25px; right: 35px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer;">&times;</span>
-        <img id="modalImg" style="max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); object-fit: contain;">
+        <img id="modalImg" style="display: block; margin: auto; max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); object-fit: contain;">
     </div>
     <a href="#" class="back-to-top" id="backToTop" title="Наверх">↑</a>
 
@@ -1070,89 +1097,6 @@ function initMap() {
         document.body.classList.toggle('accessible-mode');
         const isAccessible = document.body.classList.contains('accessible-mode');
         localStorage.setItem('accessibleMode', isAccessible);
-        if (typeof updateTramPosition === 'function') updateTramPosition();
-    }
-
-  const steamTram = document.getElementById('steamTram');
-    const trolleybus = document.getElementById('trolleybus');
-
-    // 1. Маршрут трамвая (от верха до середины сайта)
-    const tramRoute = [
-        { x: -0.20, y: 0.10 }, // Старт слева
-        { x:  1.10, y: 0.40 }, // Едет вправо вниз
-        { x: -0.20, y: 0.75 }  // Уходит налево
-    ];
-
-    // 2. Простой прямой маршрут троллейбуса (без разворотов и петляний до самого подвала)
-    const trolleyRoute = [
-        { x: -0.20, y: 0.75 }, // Появляется там же, где скрылся трамвай (слева)
-        { x:  1.10, y: 0.98 }  // Плавно едет вправо и вниз до самого футера
-    ];
-
-    function smoothStep(t) { return t * t * (3 - 2 * t); }
-
-    function getPoint(route, progress) {
-        const segments = route.length - 1;
-        const position = Math.max(0, Math.min(1, progress)) * segments;
-        const index = Math.min(Math.floor(position), segments - 1);
-        const localT = smoothStep(position - index);
-
-        const p1 = route[index];
-        const p2 = route[index + 1];
-
-        return {
-            x: p1.x + (p2.x - p1.x) * localT,
-            y: p1.y + (p2.y - p1.y) * localT
-        };
-    }
-
-    function updateTransports() {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        
-        if (docHeight <= 0) return;
-
-        const totalProgress = Math.min(Math.max(scrollTop / docHeight, 0), 1);
-
-        // ТРАМВАЙ (первая половина скролла: 0.0 — 0.5)
-        if (steamTram) {
-            if (totalProgress <= 0.52) {
-                steamTram.style.opacity = '1';
-                const tramProgress = totalProgress * 2; 
-                const point = getPoint(tramRoute, tramProgress);
-                
-                const currentX = point.x * window.innerWidth;
-                const currentY = point.y * window.innerHeight;
-
-                const lookAhead = Math.min(tramProgress + 0.005, 1);
-                const nextPoint = getPoint(tramRoute, lookAhead);
-                const scaleX = (nextPoint.x - point.x) >= 0 ? 1 : -1;
-
-                steamTram.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) scaleX(${scaleX})`;
-            } else {
-                steamTram.style.opacity = '0';
-            }
-        }
-
-        // ТРОЛЛЕЙБУС (вторая половина скролла: 0.48 — 1.0)
-        if (trolleybus) {
-            if (totalProgress >= 0.48) {
-                trolleybus.style.opacity = '1';
-                const trollProgress = (totalProgress - 0.48) / 0.52; 
-                const point = getPoint(trolleyRoute, trollProgress);
-                
-                const currentX = point.x * window.innerWidth;
-                const currentY = point.y * window.innerHeight;
-
-                const lookAhead = Math.min(trollProgress + 0.005, 1);
-                const nextPoint = getPoint(trolleyRoute, lookAhead);
-                const scaleX = (nextPoint.x - point.x) >= 0 ? 1 : -1;
-
-                trolleybus.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) scaleX(${scaleX})`;
-            } else {
-                trolleybus.style.opacity = '0';
-            }
-        }
     }
 
     window.addEventListener('scroll', updateTransports, { passive: true });
