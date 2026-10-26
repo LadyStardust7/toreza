@@ -21,7 +21,12 @@
 
         .back-link { font-family: 'Unbounded', sans-serif; font-size: 0.85rem; color: #E73121; text-decoration: none; font-weight: 700; display: inline-block; margin-bottom: 30px; text-transform: uppercase; }
         .back-link:hover { text-decoration: none; }
-        @media (max-width: 600px) { .article-container { padding: 25px; } h1 { font-size: 1.4rem; } }
+       @media (max-width: 650px) { 
+            .article-container { padding: 25px; } 
+            h1 { font-size: 1.4rem; }
+            .no-break-title { white-space: normal !important; } /* Разрешаем перенос на мобилках */
+            .article-gallery { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
