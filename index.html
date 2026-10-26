@@ -1134,5 +1134,20 @@ function initMap() {
         modal.style.display = 'none';
     });
 </script>
+<script>
+    // Делаем карточки полностью кликабельными на ПК и мобилках
+    document.querySelectorAll('.card').forEach(card => {
+        const actionLink = card.querySelector('.card-action');
+        if (actionLink) {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', (e) => {
+                // Если кликнули не по какой-то внутренней отдельной ссылке, а просто по карточке
+                if (e.target.tagName !== 'A') {
+                    window.open(actionLink.href, actionLink.target || '_self');
+                }
+            });
+        }
+    });
+</script>    
 </body>
 </html>
