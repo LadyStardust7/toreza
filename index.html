@@ -106,6 +106,12 @@
         padding: 20px !important;
     }
 }
+        /* Адаптивность для открыток на мобилках */
+@media screen and (max-width: 768px) {
+    .postcards-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
         /* Слайдер сравнения */
         .before-after-container { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 20px; margin-bottom: 40px; }
         .before-after-slider { position: relative; width: 100%; max-width: 800px; margin: 0 auto; aspect-ratio: 5 / 4; overflow: hidden; border-radius: 14px; user-select: none; background: #ffffff; }
@@ -625,21 +631,11 @@
 
             </div>
 
-            <!-- Подраздел 2: Исторические открытки -->
+             <!-- Подраздел 2: Исторические открытки -->
             <h3 style="font-size: 1.3rem; font-weight: 700; margin: 36px 0 12px 0; color: #111; border-top: 1px solid #EAEAEA; padding-top: 32px;">Исторические открытки</h3>
             <p style="margin-bottom: 20px; color: #555555;">Архивные почтовые карточки с видами Старо-Парголовского проспекта и проспекта Мориса Тореза</p>    
             <!-- Сетка открыток 2x2 -->
-           .postcards-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-    gap: 24px; 
-}
-
-@media screen and (max-width: 768px) {
-    .postcards-grid {
-        grid-template-columns: 1fr !important;
-    }
-}
+            <div class="postcards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px;">
                 
                 <!-- Открытка 1 -->
                 <div class="art-card" style="background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #EAEAEA; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column;">
