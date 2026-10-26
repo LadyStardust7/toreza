@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цифровая прогулка: Проспект Тореза</title>
+    
+    <!-- Подключение API Яндекс Карт -->
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+
+    <!-- Подключение шрифтов Unbounded и Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Unbounded:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-paper: #F9F8F6;
+            --text-main: #1A1A1A;
+            --accent-vermilion: #E73121;
+            --accent-hover: #D02B1E;
+            --accent-tint: #FDEAE8;
+            --card-bg: #FFFFFF;
+            --border-color: #E9ECEF;
+            
+            --font-heading: 'Unbounded', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --nav-height: 70px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-height) + 20px); }
+        body { font-family: var(--font-body); background-color: var(--bg-paper); color: var(--text-main); line-height: 1.6; overflow-x: hidden; padding-top: var(--nav-height); }
+        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; position: relative; }
+
+        /* Трекер скролла */
+        .scroll-progress-line { position: fixed; top: 0; left: 16px; width: 4px; height: 100vh; background: #E0DFDD; z-index: 1001; }
+        .scroll-progress-fill { width: 100%; height: 0%; background: var(--accent-vermilion); transition: height 0.1s linear; }
+
+        /* Шапка */
+        .site-nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-height); background: rgba(249, 248, 246, 0.98); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0, 0, 0, 0.08); z-index: 10000; display: flex; align-items: center; }
+        .nav-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 15px; }
+        .nav-brand { font-family: var(--font-heading); font-size: 0.85rem; font-weight: 800; color: var(--text-main); text-decoration: none; text-transform: uppercase; white-space: nowrap; z-index: 10002; }
+        .nav-menu { display: flex; align-items: center; gap: 18px; list-style: none; }
+        .nav-link { font-family: var(--font-heading); font-size: 0.78rem; font-weight: 600; color: var(--text-main); text-decoration: none; white-space: nowrap; text-transform: uppercase; }
+        .nav-link:hover { color: var(--accent-vermilion); }
+        .nav-link.btn-cta { background: var(--accent-vermilion); color: #ffffff; padding: 8px 16px; border-radius: 20px; }
+
+        .nav-toggle { display: none; flex-direction: column; justify-content: space-between; width: 30px; height: 22px; background: transparent; border: none; cursor: pointer; z-index: 10002; }
+        .nav-toggle span { width: 100%; height: 3px; background-color: var(--text-main); border-radius: 3px; transition: transform 0.3s ease, opacity 0.3s ease; }
+        .nav-toggle.open span:nth-child(1) { transform: translateY(9.5px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-9.5px) rotate(-45deg); }
+
+        /* Заголовки */
+        h1, h2, h3, h4 { font-family: var(--font-heading) !important; letter-spacing: -0.02em; }
+        .section-title-wrap { display: flex; align-items: baseline; gap: 12px; margin: 60px 0 25px; border-bottom: 2px solid var(--accent-vermilion); padding-bottom: 10px; }
+        .section-num { font-family: var(--font-heading); font-size: 1.2rem; color: var(--accent-vermilion); font-weight: 800; }
+        .section-title { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: var(--text-main); text-transform: uppercase; }
+        .tag { display: inline-block; font-family: var(--font-heading); background: var(--accent-tint); color: var(--accent-vermilion); font-size: 0.72rem; font-weight: 700; padding: 5px 12px; border-radius: 20px; margin-bottom: 12px; text-transform: uppercase; }
+
+        /* Hero */
+        header { position: relative; width: 100vw; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; height: calc(85vh - var(--nav-height)); min-height: 520px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 20px; overflow: hidden; background-color: #333333; }
+        .hero-bg-layer { position: absolute; inset: 0; background-image: url('hero-bg.jpg'); background-position: center; background-size: cover; filter: brightness(0.85); z-index: 1; }
+        .hero-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.35); z-index: 2; }
+        .hero-content { position: relative; z-index: 3; max-width: 920px; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; }
+        .hero-badge { font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #FFFFFF; background: var(--accent-vermilion); padding: 6px 18px; border-radius: 30px; margin-bottom: 20px; }
+        header h1 { font-family: var(--font-heading) !important; font-size: clamp(2.4rem, 5.5vw, 4.5rem); color: #FFFFFF; line-height: 1.08; margin-bottom: 20px; text-transform: uppercase; font-weight: 900; }
+        header h1 .highlight { color: var(--accent-vermilion); display: block; }
+        header p.subtitle { font-size: clamp(1rem, 1.8vw, 1.25rem); color: #FFFFFF; max-width: 650px; margin: 0 auto 28px; background: rgba(0, 0, 0, 0.65); padding: 10px 24px; border-radius: 30px; }
+        .hero-btn { font-family: var(--font-heading); font-size: 0.9rem; font-weight: 700; text-transform: uppercase; color: #FFFFFF; background: var(--accent-vermilion); padding: 16px 32px; border-radius: 40px; text-decoration: none; }
+
+       /* Bento Grid & Cards */
+        .bento-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 28px; transition: all 0.35s ease; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-num { font-family: var(--font-heading); font-size: 2rem; font-weight: 900; color: var(--accent-vermilion); margin-bottom: 12px; }
+        .card h3 { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; }
+        .card p { font-size: 0.95rem; color: #4A4A4A; hyphens: auto; -webkit-hyphens: auto; word-break: normal; }
+        
+        /* Ссылка-кнопка "Читать историю" без подчеркивания */
+        .card-action { display: inline-block; margin-top: 15px; font-family: var(--font-heading); font-size: 0.8rem; font-weight: 700; color: var(--accent-vermilion); text-transform: uppercase; opacity: 0; transform: translateY(8px); transition: all 0.3s ease; text-decoration: none !important; }
+        .card-action:hover, .card-action:focus { text-decoration: none !important; }
+        
+        /* Эффекты при наведении на карточку */
+        .card:hover { background: var(--accent-vermilion); border-color: var(--accent-vermilion); transform: translateY(-5px); }
+        .card:hover .card-num, .card:hover h3, .card:hover p, .card:hover .card-action { color: #FFFFFF !important; text-decoration: none !important; }
+        .card:hover .tag { background: #FFFFFF; color: var(--accent-vermilion); }
+        .card:hover .card-action { opacity: 1; transform: translateY(0); }
+
+        /* Слайдер сравнения */
+        .before-after-container { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 20px; margin-bottom: 40px; }
+        .before-after-slider { position: relative; width: 100%; max-width: 800px; margin: 0 auto; aspect-ratio: 5 / 4; overflow: hidden; border-radius: 14px; user-select: none; background: #ffffff; }
+        .slider-img.img-after { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; z-index: 1; }
+        .img-before-wrapper { position: absolute; top: 0; left: 0; width: 50%; height: 100%; overflow: hidden; z-index: 3; background: #ffffff; }
+        .img-before-wrapper img { position: absolute; top: 0; left: 0; width: var(--slider-width, 800px); max-width: none; height: 100%; object-fit: contain; object-position: center bottom; }
+        .slider-label { position: absolute; bottom: 16px; padding: 6px 14px; background: rgba(0, 0, 0, 0.85); color: #ffffff; font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700; border-radius: 20px; text-transform: uppercase; backdrop-filter: blur(4px); pointer-events: none; white-space: nowrap; }
+        .slider-label.after { right: 16px; z-index: 2; }
+        .slider-label.before { left: 16px; z-index: 4; }
+        .slider-range-input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; z-index: 10; cursor: ew-resize; }
+        .slider-handle-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: #ffffff; z-index: 5; pointer-events: none; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); }
+        .slider-handle-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; background: var(--accent-vermilion); color: #ffffff; border: 3px solid #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); }
+
+        /* Карусели и стрелочки */
+        .carousel-wrapper { position: relative; margin-bottom: 30px; }
+        .carousel { display: flex; gap: 20px; overflow-x: auto; scroll-behavior: smooth; padding: 10px 12px 20px; scrollbar-width: thin; }
+        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: var(--accent-vermilion); color: white; border: none; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; }
+        .carousel-btn.prev { left: -20px; }
+        .carousel-btn.next { right: -20px; }
+
+        .video-card { min-width: 320px; max-width: 320px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 16px; flex-shrink: 0; }
+        .video-thumb { width: 100%; aspect-ratio: 16 / 9; background-color: var(--text-main); border-radius: 10px; margin-bottom: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #ffffff; font-size: 0.8rem; font-family: var(--font-heading); }
+        .play-icon { width: 44px; height: 44px; background: var(--accent-vermilion); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ffffff; margin-bottom: 8px; padding-left: 3px; }
+        .video-title { font-family: var(--font-heading); font-size: 0.9rem; font-weight: 700; margin-bottom: 6px; }
+        .video-author { font-size: 0.85rem; color: var(--accent-vermilion); font-weight: 600; }
+
+        .book-card-link { text-decoration: none; color: inherit; display: flex; flex-shrink: 0; }
+        .book-card { min-width: 250px; max-width: 250px; height: 100%; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; }
+        .book-cover { width: 100%; height: 260px; background-color: #F3F3F3; border-radius: 8px; margin-bottom: 14px; display: flex; align-items: center; justify-content: center; color: #8C8C8C; font-family: var(--font-heading); font-size: 0.8rem; overflow: hidden; }
+        .book-cover img { width: 100%; height: 100%; object-fit: contain; background-color: #F3F3F3; }
+        .book-title { font-family: var(--font-heading); font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
+        .book-author { font-size: 0.85rem; color: var(--accent-vermilion); font-weight: 600; margin-bottom: 8px; }
+        .book-desc { font-size: 0.8rem; color: #555555; }
+
+        /* Карта и форма */
+        #map { width: 100%; height: 420px; border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 30px; }
+        form { display: flex; flex-direction: column; gap: 16px; }
+        input, textarea { font-family: var(--font-body); padding: 14px 18px; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-paper); font-size: 0.95rem; outline: none; }
+        button { font-family: var(--font-heading); padding: 16px; border-radius: 10px; background: var(--accent-vermilion); color: #ffffff; font-weight: 700; font-size: 0.9rem; cursor: pointer; border: none; text-transform: uppercase; }
+
+        /* Подвал */
+        footer { background: var(--text-main); color: #F8F9FA; padding: 60px 20px 30px; margin-top: 80px; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; }
+        .footer-container { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 35px; margin-bottom: 40px; }
+        .footer-col h4 { font-family: var(--font-heading); font-size: 0.95rem; color: #ffffff; margin-bottom: 18px; border-bottom: 2px solid var(--accent-vermilion); padding-bottom: 6px; display: inline-block; text-transform: uppercase; }
+        .footer-col p, .footer-col ul { font-size: 0.88rem; color: #B0B0B0; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col a { color: #B0B0B0; text-decoration: none; }
+        .social-vk { display: inline-flex; font-family: var(--font-heading); background: #0077FF; color: #ffffff !important; padding: 10px 16px; border-radius: 8px; font-weight: 700; font-size: 0.8rem; }
+        .logo-placeholders { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+        .logo-box { border: 1px dashed #555; border-radius: 6px; padding: 8px 12px; font-size: 0.75rem; color: #999; text-align: center; font-family: var(--font-heading); }
+        .footer-bottom { max-width: 960px; margin: 0 auto; padding-top: 25px; border-top: 1px solid #333; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 15px; font-size: 0.85rem; color: #888; }
+
+        .accessibility-btn { font-family: var(--font-heading); background: transparent; border: 1px solid #777; color: #CCC; padding: 8px 16px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; }
+        .back-to-top { position: fixed; bottom: 30px; right: 30px; width: 48px; height: 48px; background: var(--accent-vermilion); color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-family: var(--font-heading); font-size: 1.2rem; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 100; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+
+        /* Паровозик */
+        .steam-tram { position: fixed; top: 0; left: 0; width: 280px; height: auto; z-index: 999; pointer-events: none; transition: transform 0.1s linear, opacity 0.3s ease; will-change: transform, opacity; }
+
+        /* Версия для слабовидящих */
+        body.accessible-mode { background-color: #000000 !important; color: #FFFF00 !important; font-size: 1.25rem !important; }
+        body.accessible-mode * { background-color: transparent !important; color: #FFFF00 !important; border-color: #FFFF00 !important; box-shadow: none !important; font-family: Arial, sans-serif !important; }
+        body.accessible-mode .site-nav { position: relative !important; background: #000000 !important; border-bottom: 2px solid #FFFF00 !important; }
+        body.accessible-mode header { height: auto !important; padding: 40px 20px !important; }
+        body.accessible-mode .hero-bg-layer, body.accessible-mode .hero-overlay, body.accessible-mode .scroll-progress-line, body.accessible-mode .steam-tram { display: none !important; }
+        body.accessible-mode .card, body.accessible-mode .video-card, body.accessible-mode .book-card, body.accessible-mode .before-after-container { border: 2px solid #FFFF00 !important; margin-bottom: 20px !important; padding: 20px !important; }
+        body.accessible-mode .tag, body.accessible-mode button, body.accessible-mode .hero-btn, body.accessible-mode .accessibility-btn { border: 2px solid #FFFF00 !important; background-color: #000000 !important; color: #FFFF00 !important; font-size: 1.1rem !important; font-weight: bold !important; padding: 10px 20px !important; }
+
+        @media screen and (max-width: 768px) {
+            body { padding-left: 0; }
+            .scroll-progress-line { display: none; }
+            header { height: auto; padding: 60px 20px; }
+            .section-title { font-size: 1.2rem; }
+            .steam-tram { width: 170px; }
+            .site-nav .nav-toggle { display: flex !important; }
+            .site-nav .nav-menu { position: fixed !important; top: var(--nav-height) !important; left: 0 !important; width: 100vw !important; height: calc(100vh - var(--nav-height)) !important; background-color: #F9F8F6 !important; flex-direction: column !important; align-items: center !important; gap: 24px !important; padding: 40px 20px !important; display: none !important; z-index: 10001 !important; }
+            .site-nav .nav-menu.open { display: flex !important; }
+            #kravchenko .card {
+                grid-template-columns: 1fr !important;
+       }
+        }
+    </style>
+</head>
+<body>
+
+    <img src="tram.png" id="steamTram" class="steam-tram" alt="Паровой трамвай">
+    <div class="scroll-progress-line"><div class="scroll-progress-fill" id="progressFill"></div></div>
+
+    <nav class="site-nav">
+        <div class="nav-container">
+            <a href="#" class="nav-brand">Проспект Тореза</a>
+            <button class="nav-toggle" id="navToggle" aria-label="Открыть меню">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#chronicle" class="nav-link">Летопись</a></li>
+                <li><a href="#route" class="nav-link">Маршрут</a></li>
+                <li><a href="#lessner-comparison" class="nav-link">Дача Лесснера</a></li>
+                <li><a href="#archive" class="nav-link">Народный архив</a></li>
+                <li><a href="#art" class="nav-link">В образах</a></li>
+                <li><a href="#books" class="nav-link">Книги</a></li>
+                <li><a href="#your-story" class="nav-link btn-cta">Ваша история</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header id="heroHeader">
+        <div class="hero-bg-layer" id="heroBg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content" id="heroContent">
+            <div class="hero-badge">Краеведческая интерактивная выставка</div>
+            <h1>Цифровая прогулка<br><span class="highlight">Проспект Тореза</span></h1>
+            <p class="subtitle">От дачной окраины до современного Выборгского района</p>
+            <a href="#kravchenko" class="hero-btn">Начать прогулку ↓</a>
+        </div>
+    </header>
+
+    <div class="container">
+
+      <!-- Блок Г. В. Кравченко: Портрет и видео -->
+        <section id="kravchenko" style="margin-top: 50px; margin-bottom: 60px;">
+            <div class="section-title-wrap">
+                <span class="section-num">01</span>
+                <h2 class="section-title">Голос истории</h2>
+            </div>
+
+            <!-- Карточка-портрет (Верхняя часть) без класса .card, чтобы не белел текст при наведении -->
+            <div style="background: #ffffff; border-radius: 20px; padding: 32px; border: 1px solid var(--border-color); display: grid; grid-template-columns: 1fr 300px; gap: 32px; align-items: start; margin-bottom: 24px; box-shadow: 0 4px 25px rgba(0,0,0,0.02);">
+                <!-- Текст и инфо -->
+                <div>
+                    <span class="tag">Память Лесного</span>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; color: #111;">Галина Всеволодовна Кравченко</h3>
+                    <p style="font-size: 0.95rem; color: var(--accent-vermilion); font-weight: 700; margin-bottom: 16px;">
+                        96 лет • Легендарная читательница библиотеки • Хранительница истории Старо-Парголовского проспекта
+                    </p>
+                    <p style="font-size: 0.95rem; color: #444; line-height: 1.6; margin-bottom: 16px;">
+                        Именно благодаря энергии и энтузиазму Галины Всеволодовны 10 лет назад нашей библиотеке было присвоено имя академика Д. С. Лихачева. Ее очерки — это бесценные свидетельства об утраченном деревянном Лесном и атмосфере старого проспекта.
+                    </p>
+
+                    <!-- Цитата-тизер -->
+                    <blockquote style="border-left: 3px solid var(--accent-vermilion); padding-left: 16px; font-style: italic; color: #555; font-size: 0.95rem; margin-bottom: 24px;">
+                        «Исчез единственный в своем особом облике проспект – сам-то он остался, но совсем потерялось и стёрлось его прежнее лицо, неповторимое и пленительное...»
+                    </blockquote>
+
+                    <a href="kravchenko-story.html" target="_blank" style="display: inline-block; font-family: var(--font-heading); background: var(--accent-vermilion); color: #ffffff; padding: 14px 28px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">
+                        Читать воспоминания полностью →
+                    </a>
+                </div>
+
+                <!-- Фото Галины Всеволодовны -->
+                <div style="width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
+                    <img src="kravchenko.jpg" alt="Галина Всеволодовна Кравченко" style="width: 100%; height: auto; display: block; object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- Музейный видео-блок (Нижняя часть во всю ширину) -->
+            <div style="background: #1A1A1A; border-radius: 20px; padding: 32px; color: #ffffff; box-shadow: 0 8px 24px rgba(0,0,0,0.12);">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                    <div>
+                        <span style="font-family: var(--font-heading); font-size: 0.75rem; color: var(--accent-vermilion); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px;">Видеоэксклюзив</span>
+                        <h4 style="font-size: 1.25rem; color: #ffffff; font-family: var(--font-heading); margin: 0;">Интервью с Галиной Всеволодовной Кравченко</h4>
+                    </div>
+                    <span style="background: rgba(255,255,255,0.1); color: #ccc; font-size: 0.8rem; font-family: var(--font-heading); padding: 6px 14px; border-radius: 20px;">Воспоминания о старом Лесном</span>
+                </div>
+
+                <!-- Плеер VK -->
+                <div style="width: 100%; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden;">
+                    <iframe src="https://vk.ru/video_ext.php?oid=-XXXXX&id=YYYYY&hash=ZZZZZ" 
+                            width="100%" 
+                            height="100%" 
+                            frameborder="0" 
+                            allow="autoplay; encrypted-media; fullscreen; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </section>
+    <!-- Блок Р. Всеволодова (Часть 2: Настоящее) -->
+        <section id="vsevolodov" style="margin-top: 50px; margin-bottom: 60px;">
+            <div class="section-title-wrap">
+                <span class="section-num">02</span>
+                <h2 class="section-title">Современный проспект</h2>
+            </div>
+
+            <!-- Карточка-портрет Романа Всеволодова -->
+            <div style="background: #ffffff; border-radius: 20px; padding: 32px; border: 1px solid var(--border-color); display: grid; grid-template-columns: 1fr 300px; gap: 32px; align-items: start; margin-bottom: 24px; box-shadow: 0 4px 25px rgba(0,0,0,0.02);">
+                <!-- Текст и инфо -->
+                <div>
+                    <span class="tag">Новая история</span>
+                    <h3 style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; color: #111;">Роман Всеволодов</h3>
+                    <p style="font-size: 0.95rem; color: var(--accent-vermilion); font-weight: 700; margin-bottom: 16px;">
+                        Автор книги «Когда человек становится проспектом» • Исследователь истории Выборгской стороны
+                    </p>
+                    <p style="font-size: 0.95rem; color: #444; line-height: 1.6; margin-bottom: 16px;">
+                        В документальной повести Роман Всеволодов рассказывает об эволюции проспекта Тореза и его превращении из дачной окраины в современную магистраль. Это живой взгляд человека, чья личная судьба и становление тесно переплелись с историей района.
+                    </p>
+
+                    <!-- Цитата-тизер -->
+                    <blockquote style="border-left: 3px solid var(--accent-vermilion); padding-left: 16px; font-style: italic; color: #555; font-size: 0.95rem; margin-bottom: 24px;">
+                        «Судьбу и даже характер человека во многом определяет месторасположение его дома...»
+                    </blockquote>
+
+                    <!-- Кнопка перехода на отдельную вкладку с очерком -->
+                    <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+                        <a href="vsevolodov-story.html" target="_blank" style="display: inline-block; font-family: var(--font-heading); background: var(--accent-vermilion); color: #ffffff; padding: 14px 28px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">
+                            Читать очерк об истории названия →
+                        </a>
+                        <a href="#route" style="font-family: var(--font-heading); color: var(--accent-vermilion); font-weight: 700; font-size: 0.8rem; text-decoration: none; text-transform: uppercase;">
+                            К карте и точкам ↓
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Фото Романа Всеволодова -->
+                <div style="width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
+                    <img src="vsevolodov.jpg" alt="Роман Всеволодов" style="width: 100%; height: auto; display: block; object-fit: cover;">
+                </div>
+            </div>
+
+            <!-- Видео-блок Романа Всеволодова (теперь внутри той же секции, с правильным отступом сверху) -->
+            <div style="background: #1A1A1A; border-radius: 20px; padding: 32px; color: #ffffff; box-shadow: 0 8px 24px rgba(0,0,0,0.12);">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                    <div>
+                        <span style="font-family: var(--font-heading); font-size: 0.75rem; color: var(--accent-vermilion); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px;">Видеоэксклюзив</span>
+                        <h4 style="font-size: 1.25rem; color: #ffffff; font-family: var(--font-heading); margin: 0;">Интервью с Романом Сергеевичем Всеволодовым</h4>
+                    </div>
+                    <span style="background: rgba(255,255,255,0.1); color: #ccc; font-size: 0.8rem; font-family: var(--font-heading); padding: 6px 14px; border-radius: 20px;">О современном проспекте Тореза</span>
+                </div>
+
+                <!-- Плеер VK -->
+                <div style="width: 100%; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden;">
+                    <iframe src="https://vk.ru/video_ext.php?oid=-XXXXX&id=YYYYY&hash=ZZZZZ" 
+                            width="100%" 
+                            height="100%" 
+                            frameborder="0" 
+                            allow="autoplay; encrypted-media; fullscreen; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </section>
+            <!-- Блок маршрута и карты -->
+        <section id="route" style="margin-top: 40px; margin-bottom: 60px;">
+            <div id="map"></div>
+      <!-- Карусель карточек: 10 точек с исправленной типографикой -->
+        <div class="carousel-wrapper" style="margin-top: 30px; margin-bottom: 50px;">
+            <button class="carousel-btn prev" onclick="scrollCarousel('pointsCarousel', -320)">❮</button>
+            <button class="carousel-btn next" onclick="scrollCarousel('pointsCarousel', 320)">❯</button>
+            
+            <div class="carousel" id="pointsCarousel" style="padding: 10px 4px 20px;">
+                
+                <!-- 01. Площадь Мужества -->
+                <div class="card" id="point-1" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+                    <div>
+                        <div class="card-num">01</div>
+                        <span class="tag">Символ эпохи</span>
+                        <h3>Площадь Мужества</h3>
+                        <p>Начало маршрута. Исторический перекресток Спасской дачи, ставший в&nbsp;перестроечные годы центром кооперативных ларьков и&nbsp;духа свободы.</p>
+                    </div>
+                    <a href="point-01-muzhestva.html" target="_blank" class="card-action">Читать историю →</a>
+                </div>
+
+              <!-- 02. Дом Котлова -->
+<div class="card" id="point-2" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+    <div>
+        <div class="card-num">02</div>
+        <span class="tag">Пр. Тореза, 8</span>
+        <h3>Дом Котлова</h3>
+        <p>Особняк купца Котлова в&nbsp;стиле модерн-замка. По&nbsp;легенде, здесь бывал Ф.&nbspИ.&nbspШаляпин, а&nbsp;в&nbsp;Блокаду работала библиотека («Огонёк в&nbsp;Лесном»).</p>
+    </div>
+    <a href="point-02-kotlov.html" target="_blank" class="card-action">Читать историю →</a>
+</div>
+
+               <!-- 03. Дом коменданта -->
+<div class="card" id="point-3" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+    <div>
+        <div class="card-num">03</div>
+        <span class="tag">Пр. Тореза, 29</span>
+        <h3>Дом Н. Н. Кайгородова</h3>
+        <p>Старинный особняк бывшего коменданта, где жил известный меценат. Ныне здесь располагается подразделение ГИБДД.</p>
+    </div>
+    <a href="point-03-kaigorodov.html" target="_blank" class="card-action">Читать историю →</a>
+</div>
+
+               <!-- 04. Гостиница Спутник -->
+<div class="card" id="point-4" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+    <div>
+        <div class="card-num">04</div>
+        <span class="tag">Пр. Тореза, 36</span>
+        <h3>Гостиница «Спутник»</h3>
+        <p>Культовая советская гостиница арх.&nbsp;В.&nbsp;Белова. На&nbsp;первом этаже работал киоск с&nbsp;импортной жвачкой и&nbsp;зарубежной прессой.</p>
+    </div>
+    <a href="point-04-sputnik.html" target="_blank" class="card-action">Читать историю →</a>
+</div>
+
+               <!-- 05. Приют Лепта -->
+<div class="card" id="point-5" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+    <div>
+        <div class="card-num">05</div>
+        <span class="tag">Пр. Тореза, 38</span>
+        <h3>Приют «Лепта»</h3>
+        <p>Дореволюционное Общество попечения о&nbsp;бедных детях и&nbsp;пожилых женщинах Лесного. Нынче на&nbsp;месте здания стоит жилой дом.</p>
+    </div>
+    <a href="point-05-lepta.html" target="_blank" class="card-action">Читать историю →</a>
+</div>
+               <!-- 06. Сосновка: Место дуэли -->
+<div class="card" id="point-6" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+    <div>
+        <div class="card-num">06</div>
+        <span class="tag">Парк Сосновка</span>
+        <h3>Место дуэли Лермонтова</h3>
+        <p>Уголок Сосновки, где в&nbsp;1840 году состоялась бескровная, но&nbsp;роковая дуэль М.&nbsp;Ю.&nbsp;Лермонтова с&nbsp;сыном французского посла Э.&nbsp;де&nbsp;Барантом.</p>
+    </div>
+    <a href="point-07-lermontov.html" target="_blank" class="card-action">Читать историю →</a>
+</div>
+
+               <!-- 07. Сосновка: Мототрек -->
+<div class="card" id="point-7" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+    <div>
+        <div class="card-num">07</div>
+        <span class="tag">Парк Сосновка</span>
+        <h3>Легендарный мототрек</h3>
+        <p>Эпицентр азарта и&nbsp;скорости, где каждые выходные проходили гонки, а&nbsp;трибуны кипели от&nbsp;эмоций ленинградских болельщиков.</p>
+    </div>
+    <a href="point-08-mototrek.html" target="_blank" class="card-action">Читать историю →</a>
+</div>
+
+                <!-- 08. Сосновка: Стрельбище -->
+<div class="card" id="point-8" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+    <div>
+        <div class="card-num">08</div>
+        <span class="tag">Парк Сосновка</span>
+        <h3>Всесоюзное стрельбище</h3>
+        <p>Лучший стрелковый комплекс Военно-охотничьего общества в&nbsp;СССР, где проводились чемпионаты страны и&nbsp;городские кубки.</p>
+    </div>
+    <a href="point-09-strelbishche.html" target="_blank" class="card-action">Читать историю →</a>
+</div>
+  <!-- 09. Дача Толстого -->
+<div class="card" id="point-9" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+    <div>
+        <div class="card-num">09</div>
+        <span class="tag">Пр. Тореза, 89</span>
+        <h3>Дача А. Ф. Толстого</h3>
+        <p>Необычный домик правнука фельдмаршала Кутузова, породивший множество таинственных городских легенд в&nbsp;советские годы.</p>
+    </div>
+    <a href="point-06-tolstoy.html" target="_blank" class="card-action">Читать историю →</a>
+</div>
+
+                <!-- 10. Дача Бадмаева -->
+<div class="card" id="point-10" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+    <div>
+        <div class="card-num">10</div>
+        <span class="tag">Пр. Тореза, 101</span>
+        <h3>Дача доктора Бадмаева</h3>
+        <p>Железобетонный особняк с&nbsp;восточной башенкой на&nbsp;Поклонной горе лекаря императорской семьи, укрывавшего здесь революционеров в&nbsp;1905 году.</p>
+    </div>
+    <a href="point-10-badmaev.html" target="_blank" class="card-action">Читать историю →</a>
+</div>
+
+            </div>
+        </div>
+        </section>
+ <section id="lessner-comparison">
+            <div class="section-title-wrap">
+                <span class="section-num">03</span>
+                <h2 class="section-title">Дача Лесснера: Век спустя</h2>
+            </div>
+            <p style="margin-bottom: 20px; color: #555555;">Потяните ползунок в центре вправо или влево, чтобы сравнить исторический облик особняка с его современным состоянием:</p>
+
+            <div class="before-after-container">
+                <div class="before-after-slider" id="lessnerSlider">
+                    <img src="lessner-after.jpg" alt="Дача Лесснера современное фото" class="slider-img img-after">
+                    <span class="slider-label after">Наши дни</span>
+                    <div class="img-before-wrapper" id="beforeWrapper">
+                        <img src="lessner-before.jpg" alt="Дача Лесснера историческое фото" class="slider-img img-before" id="imgBefore">
+                        <span class="slider-label before">Архивное фото</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider-range-input" id="sliderRange" aria-label="Сравнить фотографии">
+                    <div class="slider-handle-line" id="sliderLine">
+                        <div class="slider-handle-button">↔</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       <!-- Раздел 04: Народный архив -->
+        <section id="archive">
+            <div class="section-title-wrap">
+                <span class="section-num">04</span>
+                <h2 class="section-title">Народный архив</h2>
+            </div>
+            <p style="margin-bottom: 25px; color: #555555;">Подлинные свидетельства, анкеты, рукописи и стихи жителей и читателей о жизни на проспекте Тореза:</p>
+            
+            <!-- Сетка из 3 карточек с фиксированной выравнивающей структурой -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px;">
+                
+                <!-- Карточка 1: Стихотворение -->
+                <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div class="card-num">01</div>
+                        <span class="tag">Поэтическая строка</span>
+                        <h3 style="font-size: 1.1rem; margin-bottom: 6px;">«Прогулки по&nbsp;Лесному»</h3>
+                        <p style="font-size: 0.85rem; font-weight: 600; color: var(--accent-vermilion); margin-bottom: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Быстрова Т. В.</p>
+                        <p style="font-size: 0.9rem;">Поэтический квест о любимом районе и парке Сосновка.</p>
+                    </div>
+                    <a href="poem.html" target="_blank" class="card-action">Читать →</a>
+                </div>
+
+                <!-- Карточка 2: Заметки краеведа -->
+                <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div class="card-num">02</div>
+                        <span class="tag">Рукописная история</span>
+                        <h3 style="font-size: 1.1rem; margin-bottom: 6px;">Заметки о проспекте</h3>
+                        <p style="font-size: 0.85rem; font-weight: 600; color: var(--accent-vermilion); margin-bottom: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Сурова Н. В.</p>
+                        <p style="font-size: 0.9rem;">Личные воспоминания и рукописные краеведческие очерки о&nbsp;жизни на проспекте Тореза.</p>
+                    </div>
+                    <a href="story.html" target="_blank" class="card-action">Читать →</a>
+                </div>
+
+                <!-- Карточка 3: Анкеты жителей -->
+                <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div class="card-num">03</div>
+                        <span class="tag">Социологический срез</span>
+                        <h3 style="font-size: 1.1rem; margin-bottom: 6px;">Анкеты жителей</h3>
+                        <p style="font-size: 0.85rem; font-weight: 600; color: var(--accent-vermilion); margin-bottom: 12px;">9 подлинных документов</p>
+                        <p style="font-size: 0.9rem;">Живые мнения, отзывы и воспоминания жителей Выборгского района.</p>
+                    </div>
+                    <a href="ankety.html" target="_blank" class="card-action">Читать →</a>
+                </div>
+
+            </div>
+        </section>
+
+       <!-- Раздел 05: В образах -->
+        <section id="art" style="margin-top: 60px;">
+            <div class="section-title-wrap">
+                <span class="section-num">05</span>
+                <h2 class="section-title">В образах</h2>
+            </div>
+            
+            <!-- Подраздел 1: Живопись и графика -->
+            <h3 style="font-size: 1.3rem; font-weight: 700; margin: 24px 0 12px 0; color: #111;">Живопись и графика</h3>
+            <p style="margin-bottom: 20px; color: #555555;">Проспект Тореза и Выборгская сторона в произведениях петербургских художников:</p>
+            
+            <!-- Сетка картин (3 колонки) -->
+            <div class="art-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 48px;">
+                
+                <!-- 01. Сегаль и Сколозубов -->
+                <div class="art-card" style="background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #EAEAEA; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column;">
+                    <div style="width: 100%; aspect-ratio: 4 / 3; background: #F3F3F3; overflow: hidden; cursor: zoom-in;">
+                        <img src="art1.jpg" alt="Проспект Мориса Тореза" class="art-zoom-img" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                    </div>
+                    <div style="padding: 20px; display: flex; flex-direction: column; flex-grow: 1;">
+                        <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; color: #111;">Сегаль Б.Н., Сколозубов А.С.</div>
+                        <div style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: var(--accent-vermilion);">«Проспект Мориса Тореза»</div>
+                        <div style="font-size: 0.85rem; color: #666; margin-top: auto;">1983 г. • Бумага, акварель</div>
+                    </div>
+                </div>
+
+                <!-- 02. Померанцева -->
+                <div class="art-card" style="background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #EAEAEA; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column;">
+                    <div style="width: 100%; aspect-ratio: 4 / 3; background: #F3F3F3; overflow: hidden; cursor: zoom-in;">
+                        <img src="art2.jpg" alt="Проспект М.Тореза" class="art-zoom-img" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                    </div>
+                    <div style="padding: 20px; display: flex; flex-direction: column; flex-grow: 1;">
+                        <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; color: #111;">Померанцева Е.Н.</div>
+                        <div style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: var(--accent-vermilion);">«Проспект М. Тореза»</div>
+                        <div style="font-size: 0.85rem; color: #666; margin-top: auto;">1967 г. • Цветная автолитография</div>
+                    </div>
+                </div>
+
+                <!-- 03. Ушин -->
+                <div class="art-card" style="background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #EAEAEA; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column;">
+                    <div style="width: 100%; aspect-ratio: 4 / 3; background: #F3F3F3; overflow: hidden; cursor: zoom-in;">
+                        <img src="art3.jpg" alt="Пр. Тореза. Гравюра" class="art-zoom-img" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                    </div>
+                    <div style="padding: 20px; display: flex; flex-direction: column; flex-grow: 1;">
+                        <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; color: #111;">Ушин А.А.</div>
+                        <div style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: var(--accent-vermilion);">«Пр. Тореза»</div>
+                        <div style="font-size: 0.85rem; color: #666; margin-top: auto;">Гравюра</div>
+                    </div>
+                </div>
+
+                <!-- 04. Фролов -->
+                <div class="art-card" style="background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #EAEAEA; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column;">
+                    <div style="width: 100%; aspect-ratio: 4 / 3; background: #F3F3F3; overflow: hidden; cursor: zoom-in;">
+                        <img src="art4.jpg" alt="Розовый вечер" class="art-zoom-img" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                    </div>
+                    <div style="padding: 20px; display: flex; flex-direction: column; flex-grow: 1;">
+                        <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; color: #111;">Фролов С.К.</div>
+                        <div style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: var(--accent-vermilion);">«Розовый вечер. Выборгский район, проспект Тореза»</div>
+                        <div style="font-size: 0.85rem; color: #666; margin-top: auto;">1973 г. • Бумага, акварель</div>
+                    </div>
+                </div>
+
+                <!-- 05. Костров (Липы) -->
+                <div class="art-card" style="background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #EAEAEA; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column;">
+                    <div style="width: 100%; aspect-ratio: 4 / 3; background: #F3F3F3; overflow: hidden; cursor: zoom-in;">
+                        <img src="art5.jpg" alt="Липы на проспекте Тореза" class="art-zoom-img" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                    </div>
+                    <div style="padding: 20px; display: flex; flex-direction: column; flex-grow: 1;">
+                        <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; color: #111;">Костров Н.И.</div>
+                        <div style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: var(--accent-vermilion);">«Липы на проспекте Тореза»</div>
+                        <div style="font-size: 0.85rem; color: #666; margin-top: auto;">1978 г. • Из серии «Ленинград сегодня», цветной карандаш</div>
+                    </div>
+                </div>
+
+                <!-- 06. Костров (На проспекте) -->
+                <div class="art-card" style="background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #EAEAEA; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column;">
+                    <div style="width: 100%; aspect-ratio: 4 / 3; background: #F3F3F3; overflow: hidden; cursor: zoom-in;">
+                        <img src="art6.jpg" alt="На проспекте Тореза" class="art-zoom-img" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                    </div>
+                    <div style="padding: 20px; display: flex; flex-direction: column; flex-grow: 1;">
+                        <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; color: #111;">Костров Н.И.</div>
+                        <div style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: var(--accent-vermilion);">«На проспекте Тореза»</div>
+                        <div style="font-size: 0.85rem; color: #666; margin-top: auto;">1978 г. • Из серии «Ленинград сегодня», цветной карандаш</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Подраздел 2: Исторические открытки -->
+            <h3 style="font-size: 1.3rem; font-weight: 700; margin: 36px 0 12px 0; color: #111; border-top: 1px solid #EAEAEA; padding-top: 32px;">Исторические открытки</h3>
+            <p style="margin-bottom: 20px; color: #555555;">Архивные почтовые карточки с видами Старо-Парголовского проспекта и проспекта Мориса Тореза</p>    
+            <!-- Сетка открыток 2x2 -->
+            <div class="postcards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px;">
+                
+                <!-- Открытка 1 -->
+                <div class="art-card" style="background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #EAEAEA; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column;">
+                    <div style="width: 100%; aspect-ratio: 16 / 7; background: #F9F9F9; overflow: hidden; cursor: zoom-in; display: flex; align-items: center; justify-content: center; padding: 10px; box-sizing: border-box;">
+                        <img src="postcard1.jpg" alt="Петроград. Лесной. Угол Старо-Парголовского проспекта" class="art-zoom-img" style="max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.3s ease;">
+                    </div>
+                    <div style="padding: 20px; display: flex; flex-direction: column; flex-grow: 1;">
+                        <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; color: #111;">Лесной. Угол Старо-Парголовского проспекта</div>
+                        <div style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: var(--accent-vermilion);">Дорога в Сосновку</div>
+                        <div style="font-size: 0.85rem; color: #666; margin-top: auto;">1905–1909 гг. • Почтовая карточка, фотопечать • ГМЗ «Петергоф»</div>
+                    </div>
+                </div>
+
+                <!-- Открытка 2 -->
+                <div class="art-card" style="background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #EAEAEA; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column;">
+                    <div style="width: 100%; aspect-ratio: 16 / 7; background: #F9F9F9; overflow: hidden; cursor: zoom-in; display: flex; align-items: center; justify-content: center; padding: 10px; box-sizing: border-box;">
+                        <img src="postcard2.jpg" alt="Лесной корпус. Старо-Парголовский проспект" class="art-zoom-img" style="max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.3s ease;">
+                    </div>
+                    <div style="padding: 20px; display: flex; flex-direction: column; flex-grow: 1;">
+                        <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; color: #111;">«Лесной корпус. Старо-Парголовский проспект»</div>
+                        <div style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: var(--accent-vermilion);">Открытое письмо с трамвайной линией</div>
+                        <div style="font-size: 0.85rem; color: #666; margin-top: auto;">1910–1914 гг. • Фотопечать, печать • ГМЗ «Петергоф»</div>
+                    </div>
+                </div>
+
+                <!-- Открытка 3 -->
+                <div class="art-card" style="background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #EAEAEA; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column;">
+                    <div style="width: 100%; aspect-ratio: 16 / 7; background: #F9F9F9; overflow: hidden; cursor: zoom-in; display: flex; align-items: center; justify-content: center; padding: 10px; box-sizing: border-box;">
+                        <img src="postcard3.jpg" alt="Проспект Мориса Тореза. Жилые дома" class="art-zoom-img" style="max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.3s ease;">
+                    </div>
+                    <div style="padding: 20px; display: flex; flex-direction: column; flex-grow: 1;">
+                        <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; color: #111;">«Проспект Мориса Тореза. Жилые дома»</div>
+                        <div style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: var(--accent-vermilion);">Новые кварталы Ленинграда</div>
+                        <div style="font-size: 0.85rem; color: #666; margin-top: auto;">1965–1985 гг. • Цветная печать, Изд. «Аврора» • ГМЗ «Петергоф»</div>
+                    </div>
+                </div>
+
+                <!-- Открытка 4 -->
+                <div class="art-card" style="background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #EAEAEA; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column;">
+                    <div style="width: 100%; aspect-ratio: 16 / 7; background: #F9F9F9; overflow: hidden; cursor: zoom-in; display: flex; align-items: center; justify-content: center; padding: 10px; box-sizing: border-box;">
+                        <img src="postcard4.jpg" alt="Гостиница Спутник" class="art-zoom-img" style="max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.3s ease;">
+                    </div>
+                    <div style="padding: 20px; display: flex; flex-direction: column; flex-grow: 1;">
+                        <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; color: #111;">В. Николаев • «Гостиница "Спутник"»</div>
+                        <div style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: var(--accent-vermilion);">Проспект Мориса Тореза, дом 36</div>
+                        <div style="font-size: 0.85rem; color: #666; margin-top: auto;">1972 г. • Матовая фотопечать • ГМЗ «Петергоф»</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Раздел Книги со стрелочками, всеми 15 книгами и чистыми переносами авторов -->
+       <!-- Раздел Книги со стрелочками и измененным порядком -->
+       <!-- Раздел Книги с персональными ссылками на каждую книгу -->
+        <section id="books">
+            <div class="section-title-wrap">
+                <span class="section-num">06</span>
+                <h2 class="section-title">Книги</h2>
+            </div>
+            <p style="margin-bottom: 20px; color: #555555;">Издания из фонда нашей библиотеки об истории Выборгского района и проспекта Тореза:</p>
+            
+            <div class="carousel-wrapper">
+                <button class="carousel-btn prev" onclick="scrollCarousel('booksCarousel', -250)">❮</button>
+                <button class="carousel-btn next" onclick="scrollCarousel('booksCarousel', 250)">❯</button>
+                
+                <div class="carousel" id="booksCarousel">
+                    <!-- 01. Лесной: исчезнувший мир -->
+                    <a href="https://spblib.ru/catalog/-/books/10909086-lesnoy-ischeznuvshiy-mir" target="_blank" class="book-card-link" title="Открыть в каталоге СПб ГБУ ЦБС">
+                        <div class="book-card">
+                            <div class="book-cover"><img src="book1.jpg" alt="Обложка книги Лесной: исчезнувший мир"></div>
+                            <div class="book-title">Лесной: исчезнувший мир</div>
+                            <div class="book-author">Сборник очерков</div>
+                            <div class="book-desc">Исследования и воспоминания об утраченном деревянном Лесном, его уникальной дачной атмосфере и интеллигентном сообществе.</div>
+                        </div>
+                    </a>
+
+                    <!-- 02. Волшебная Гороховая -->
+                    <a href="https://spblib.ru/catalog/-/books/12380569-volshebnaya-gorokhovaya" target="_blank" class="book-card-link" title="Открыть в каталоге СПб ГБУ ЦБС">
+                        <div class="book-card">
+                            <div class="book-cover"><img src="book2.jpg" alt="Обложка книги Волшебная Гороховая"></div>
+                            <div class="book-title">Волшебная Гороховая / Как человек становится проспектом</div>
+                            <div class="book-author">Андреева&nbsp;Ю.&nbspИ., Всеволодов&nbsp;Р.</div>
+                            <div class="book-desc">Историко-топонимический очерк об эволюции городских магистралей, механизмах наименования улиц и увековечивании известных имен в петербургской топонимике.</div>
+                        </div>
+                    </a>
+
+                    <!-- 03. Большая Топонимическая Энциклопедия -->
+                    <a href="https://spblib.ru/catalog/-/books/10955659-bol-shaya-toponimicheskaya-entsiklopediya-sankt-peterburga" target="_blank" class="book-card-link" title="Открыть в каталоге СПб ГБУ ЦБС">
+                        <div class="book-card">
+                            <div class="book-cover"><img src="book3.jpg" alt="Обложка книги Большая Топонимическая Энциклопедия Санкт-Петербурга"></div>
+                            <div class="book-title">Большая Топонимическая Энциклопедия Санкт-Петербурга</div>
+                            <div class="book-author">Под ред. Владимировича&nbsp;А.&nbspГ.</div>
+                            <div class="book-desc">Фундаментальный справочник об истории наименований всех проспектов, улиц и исторических районов Северной столицы.</div>
+                        </div>
+                    </a>
+
+                    <!-- 04. Исторические районы Петербурга от А до Я -->
+                    <a href="https://spblib.ru/catalog/-/books/10891514-istoricheskiye-rayony-peterburga-ot-a-do-ya" target="_blank" class="book-card-link" title="Открыть в каталоге СПб ГБУ ЦБС">
+                        <div class="book-card">
+                            <div class="book-cover"><img src="book4.png" alt="Обложка книги Исторические районы Петербурга от А до Я"></div>
+                            <div class="book-title">Исторические районы Петербурга от А до Я</div>
+                            <div class="book-author">Глезеров&nbsp;С.&nbspЕ.</div>
+                            <div class="book-desc">Энциклопедический гид по историческим окраинам и предместьям Санкт-Петербурга, их архитектурному облику, дачной жизни и знаменитым жителям.</div>
+                        </div>
+                    </a>
+
+                    <!-- 05. Лесной, Гражданка, Ручьи, Удельная... -->
+                    <a href="https://spblib.ru/catalog/-/books/11817995-lesnoy-grazhdanka-ruch-i-udel-naya-" target="_blank" class="book-card-link" title="Открыть в каталоге СПб ГБУ ЦБС">
+                        <div class="book-card">
+                            <div class="book-cover"><img src="book5.jpg" alt="Обложка книги Лесной, Гражданка, Ручьи, Удельная..."></div>
+                            <div class="book-title">Лесной, Гражданка, Ручьи, Удельная...</div>
+                            <div class="book-author">Глезеров&nbsp;С.&nbspЕ.</div>
+                            <div class="book-desc">Подробная хроника северных окраин города, раскрывающая историю дачного быта, усадебных ансамблей и формирования инфраструктуры Лесного.</div>
+                        </div>
+                    </a>
+
+                    <!-- 06. Литературное путешествие по Выборгской стороне -->
+                    <a href="https://spblib.ru/catalog/-/books/13219933-literaturnoye-puteshestviye-po-vyborgskoy-storone-sankt-peterburga" target="_blank" class="book-card-link" title="Открыть в каталоге СПб ГБУ ЦБС">
+                        <div class="book-card">
+                            <div class="book-cover"><img src="book6.jpg" alt="Обложка книги Литературное путешествие по Выборгской стороне..."></div>
+                            <div class="book-title">Литературное путешествие по Выборгской стороне...</div>
+                            <div class="book-author">Гусенцова&nbsp;Т.&nbspМ., Добрынина&nbsp;И.&nbspН.</div>
+                            <div class="book-desc">Исследование литературного наследия Выборгской стороны, адресов знаменитых писателей и отражения района в русской поэзии и прозе XIX–XX веков.</div>
+                        </div>
+                    </a>
+
+                    <!-- 07. Путешествие по Выборгской стороне -->
+                    <a href="https://spblib.ru/catalog/-/books/11331394-puteshestviye-po-vyborgskoy-storone" target="_blank" class="book-card-link" title="Открыть в каталоге СПб ГБУ ЦБС">
+                        <div class="book-card">
+                            <div class="book-cover"><img src="book7.jpg" alt="Обложка книги Путешествие по Выборгской стороне"></div>
+                            <div class="book-title">Путешествие по Выборгской стороне</div>
+                            <div class="book-author">Гусенцова&nbsp;Т.&nbspМ., Добрынина&nbsp;И.&nbspН.</div>
+                            <div class="book-desc">Историко-краеведческий очерк об архитектуре, даче А. Ф. Толстого, особняке Котлова, Площади Мужества и парке «Сосновка».</div>
+                        </div>
+                    </a>
+
+                    <!-- 08. Эпохи и судьбы Выборгского района -->
+                    <a href="https://spblib.ru/catalog/-/books/11550769-epokhi-i-sud-by-vyborgskogo-rayona" target="_blank" class="book-card-link" title="Открыть в каталоге СПб ГБУ ЦБС">
+                        <div class="book-card">
+                            <div class="book-cover"><img src="book8.jpg" alt="Обложка книги Эпохи и судьбы Выборгского района"></div>
+                            <div class="book-title">Эпохи и судьбы Выборгского района</div>
+                            <div class="book-author">Ерофеев&nbsp;А.&nbspД.</div>
+                            <div class="book-desc">Иллюстрированная хроника трехвекового развития Выборгской стороны, её крупнейших промышленных производств, усадеб и выдающихся деятелей.</div>
+                        </div>
+                    </a>
+
+                    <!-- 09. Девичья команда -->
+                    <a href="https://spblib.ru/catalog/-/books/11037456-devich-ya-komanda" target="_blank" class="book-card-link" title="Открыть в каталоге СПб ГБУ ЦБС">
+                        <div class="book-card">
+                            <div class="book-cover"><img src="book9.jpg" alt="Обложка книги Девичья команда"></div>
+                            <div class="book-title">Девичья команда</div>
+                            <div class="book-author">Заводчиков&nbsp;П.&nbspА., Самойлов&nbsp;Ф.</div>
+                            <div class="book-desc">Документальные рассказы о подвиге дрессировщиков минно-разыскных собак и работе девичьего батальона в лесопарке «Сосновка» в годы Блокады.</div>
+                        </div>
+                    </a>
+
+                    <!-- 10. Возвращение в Лесной -->
+                    <a href="https://spblib.ru/catalog/-/books/13106657-vozvrashcheniye-v-lesnoy" target="_blank" class="book-card-link" title="Открыть в каталоге СПб ГБУ ЦБС">
+                        <div class="book-card">
+                            <div class="book-cover"><img src="book10.jpg" alt="Обложка книги Возвращение в Лесной"></div>
+                            <div class="book-title">Возвращение в Лесной</div>
+                            <div class="book-author">Кравченко&nbsp;Г.&nbspВ.</div>
+                            <div class="book-desc">Авторские краеведческие очерки о дачной культуре, памятниках архитектуры и исторических судьбах жителей Выборгского района.</div>
+                        </div>
+                    </a>
+
+                    <!-- 11. Ленинград от А до Я -->
+                    <a href="https://spblib.ru/catalog/-/books/12737524-leningrad-ot-a-do-ya" target="_blank" class="book-card-link" title="Открыть в каталоге СПб ГБУ ЦБС">
+                        <div class="book-card">
+                            <div class="book-cover"><img src="book11.webp" alt="Обложка книги Ленинград от А до Я"></div>
+                            <div class="book-title">Ленинград от А до Я</div>
+                            <div class="book-author">Сост. Преснова&nbsp;В.&nbspА., Сухотин&nbsp;Я.&nbspЛ.</div>
+                            <div class="book-desc">Популярный советский справочник-путеводитель по проспектам, новостройкам и памятным местам Ленинграда 1970-х годов.</div>
+                        </div>
+                    </a>
+
+                    <!-- 12. Ленинград : районы новостроек -->
+                    <a href="https://spblib.ru/catalog/-/books/12874957-leningrad-rayony-novostroyek" target="_blank" class="book-card-link" title="Открыть в каталоге СПб ГБУ ЦБС">
+                        <div class="book-card">
+                            <div class="book-cover"><img src="book12.jpg" alt="Обложка книги Ленинград : районы новостроек"></div>
+                            <div class="book-title">Ленинград : районы новостроек</div>
+                            <div class="book-author">Лисовский&nbsp;В.&nbspГ.</div>
+                            <div class="book-desc">Архитектуроведческий анализ масштабного градостроительного развития Ленинграда и формирования новых жилых массивов Выборгской стороны.</div>
+                        </div>
+                    </a>
+
+                    <!-- 13. Памятные даты и забытые имена -->
+                    <a href="https://spblib.ru/catalog/-/books/13229271-pamyatnyye-daty-i-zabytyye-imena" target="_blank" class="book-card-link" title="Открыть в каталоге СПб ГБУ ЦБС">
+                        <div class="book-card">
+                            <div class="book-cover"><img src="book13.jpg" alt="Обложка книги Памятные даты и забытые имена"></div>
+                            <div class="book-title">Памятные даты и забытые имена : очерки по истории Лесного</div>
+                            <div class="book-author">Сборник / отв. ред. Федорова&nbsp;Н.&nbspВ.</div>
+                            <div class="book-desc">Исследования по истории общественной и культурной жизни Лесного, включая деятельность издательства «Лепта» и местных просветительских обществ.</div>
+                        </div>
+                    </a>
+
+                    <!-- 14. Творческая интеллигенция в Лесном -->
+                    <a href="https://spblib.ru/catalog/-/books/13288689-tvorcheskaya-intelligentsiya-v-lesnom" target="_blank" class="book-card-link" title="Открыть в каталоге СПб ГБУ ЦБС">
+                        <div class="book-card">
+                            <div class="book-cover"><img src="book14.jpg" alt="Обложка книги Творческая интеллигенция в Лесном"></div>
+                            <div class="book-title">Творческая интеллигенция в Лесном</div>
+                            <div class="book-author">ДДТ «Союз»</div>
+                            <div class="book-desc">Краеведческий путеводитель по проспекту Мориса Тореза, Светлановскому проспекту и Сосновке, посвященный ученым и творческим деятелям.</div>
+                        </div>
+                    </a>
+
+                    <!-- 15. Скунскамера -->
+                    <a href="https://spblib.ru/catalog/-/books/12698170-skunskamera" target="_blank" class="book-card-link" title="Открыть в каталоге СПб ГБУ ЦБС">
+                        <div class="book-card">
+                            <div class="book-cover"><img src="book15.jpg" alt="Обложка книги Скунскамера"></div>
+                            <div class="book-title">Скунскамера</div>
+                            <div class="book-author">Аствацатуров&nbsp;А.&nbspА.</div>
+                            <div class="book-desc">Автобиографическая проза о взрослении в Ленинграде 1970–1980-х годов с яркими зарисовками дворового быта Выборгского района.</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="your-story">
+            <div class="section-title-wrap">
+                <span class="section-num">07</span>
+                <h2 class="section-title">Ваша история</h2>
+            </div>
+            <div class="card" style="background: #ffffff; color: var(--text-main);">
+                <p style="margin-bottom: 18px; color: #4A4A4A;">Поделитесь своими воспоминаниями или фотографиями проспекта Тореза!</p>
+                <form>
+                    <input type="text" placeholder="Ваше имя" required>
+                    <textarea rows="4" placeholder="Ваша история или воспоминание о проспекте..." required></textarea>
+                    <button type="button" onclick="alert('Спасибо! История отправлена.')">Отправить историю</button>
+                </form>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>О библиотеке</h4>
+                <p><strong>Библиотека им. Д. С. Лихачева</strong></p>
+                <p style="margin-bottom: 12px;">СПб ГБУ «ЦБС Выборгского района»</p>
+                <p style="font-size: 0.8rem; opacity: 0.7;">
+                    Подготовлено для фестиваля-конкурса «История одной улицы» в рамках общегородского проекта ЦГПБ им. В. В. Маяковского «Книгаверситет».
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4>Контакты</h4>
+                <p>📍 194223, Санкт-Петербург, пр-т Тореза, д. 32</p>
+                <p>📞 +7 (812) 246-93-01</p>
+                <p>✉️ <a href="mailto:toreza@cbsvib.ru">toreza@cbsvib.ru</a></p>
+            </div>
+            <div class="footer-col">
+                <h4>Навигация</h4>
+                <ul>
+                    <li><a href="#chronicle">01. Летопись</a></li>
+                    <li><a href="#route">02. Маршрут</a></li>
+                    <li><a href="#lessner-comparison">03. Дача Лесснера</a></li>
+                    <li><a href="#archive">04. Народный архив</a></li>
+                    <li><a href="#art">05. В образах</a></li>
+                    <li><a href="#books">06. Книги</a></li>
+                    <li><a href="#your-story">07. Ваша история</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Мы в соцсетях</h4>
+                <a href="https://vk.ru/toreza32" target="_blank" class="social-vk"><span>ВКонтакте</span></a>
+                <div class="logo-placeholders">
+                    <div class="logo-box">[Лого: Библиотека им. Д.С. Лихачева]</div>
+                    <div class="logo-box">[Лого: ЦБС Выборгского района]</div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>© 2026 Библиотека им. Д. С. Лихачева</div>
+            <button class="accessibility-btn" onclick="toggleAccessibility()">👁 Версия для слабовидящих</button>
+        </div>
+    </footer>
+<!-- Модальное окно для увеличения картин и открыток -->
+    <div id="artModal" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; cursor: zoom-out;">
+        <span style="position: absolute; top: 25px; right: 35px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer;">&times;</span>
+        <img id="modalImg" style="max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); object-fit: contain;">
+    </div>
+    <a href="#" class="back-to-top" id="backToTop" title="Наверх">↑</a>
+
+    <script type="text/javascript">
+    if (localStorage.getItem('accessibleMode') === 'true') {
+        document.body.classList.add('accessible-mode');
+    }
+
+    function initMobileMenu() {
+        const toggleBtn = document.getElementById('navToggle');
+        const menuList = document.getElementById('navMenu');
+        if (!toggleBtn || !menuList) return;
+
+        toggleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const isOpen = menuList.classList.contains('open');
+            menuList.classList.toggle('open', !isOpen);
+            toggleBtn.classList.toggle('open', !isOpen);
+        });
+
+        menuList.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    menuList.classList.remove('open');
+                    toggleBtn.classList.remove('open');
+                }
+            });
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initMobileMenu);
+    } else {
+        initMobileMenu();
+    }
+
+    function initLessnerSlider() {
+        const slider = document.getElementById('lessnerSlider');
+        const range = document.getElementById('sliderRange');
+        const beforeWrapper = document.getElementById('beforeWrapper');
+        const sliderLine = document.getElementById('sliderLine');
+
+        if (!slider || !range || !beforeWrapper || !sliderLine) return;
+
+        function syncSliderWidth() {
+            const width = slider.getBoundingClientRect().width;
+            slider.style.setProperty('--slider-width', `${width}px`);
+        }
+
+        syncSliderWidth();
+        window.addEventListener('resize', syncSliderWidth);
+
+        range.addEventListener('input', (e) => {
+            const val = e.target.value + '%';
+            beforeWrapper.style.width = val;
+            sliderLine.style.left = val;
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initLessnerSlider);
+    } else {
+        initLessnerSlider();
+    }
+
+  ymaps.ready(initMap);
+function initMap() {
+    var myMap = new ymaps.Map("map", {
+        center: [60.0050, 30.3350], // Центр карты ровно посредине проспекта
+        zoom: 13,
+        controls: ['zoomControl']
+    });
+
+    // 10 точек с выверенными координатами строго на проспекте Тореза и в Сосновке
+    var markPoint1 = new ymaps.Placemark([59.998315, 30.363856], {
+        balloonContentHeader: '<b>Площадь Мужества</b>',
+        balloonContentBody: 'Начало маршрута, исторический перекресток.'
+    }, { preset: 'islands#redIcon' });
+
+    var markPoint2 = new ymaps.Placemark([60.000029, 30.362077], {
+        balloonContentHeader: '<b>Дом Котлова (Дом Шаляпина)</b>',
+        balloonContentBody: 'пр. Тореза, 8. Особняк в стиле модерн-замка.'
+    }, { preset: 'islands#redIcon' });
+
+    var markPoint3 = new ymaps.Placemark([60.005068, 30.357541], {
+        balloonContentHeader: '<b>Дом Н. Н. Кайгородова</b>',
+        balloonContentBody: 'пр. Тореза, 29. Дом коменданта.'
+    }, { preset: 'islands#redIcon' });
+
+    var markPoint4 = new ymaps.Placemark([60.005392, 30.354253], {
+        balloonContentHeader: '<b>Гостиница «Спутник»</b>',
+        balloonContentBody: 'пр. Тореза, 36. Культовый советский проект арх. В. Белова.'
+    }, { preset: 'islands#redIcon' });
+
+    var markPoint5 = new ymaps.Placemark([60.006314, 30.353004], {
+        balloonContentHeader: '<b>Приют «Лепта»</b>',
+        balloonContentBody: 'пр. Тореза, 38. Общество попечения о бедных.'
+    }, { preset: 'islands#redIcon' });
+
+    var markPoint7 = new ymaps.Placemark([60.01155, 30.347520], {
+        balloonContentHeader: '<b>Место дуэли Лермонтова</b>',
+        balloonContentBody: 'Парк Сосновка. Место дуэли с Э. де Барантом.'
+    }, { preset: 'islands#redIcon' });
+
+    var markPoint8 = new ymaps.Placemark([60.024539, 30.332865], {
+        balloonContentHeader: '<b>Легендарный мототрек</b>',
+        balloonContentBody: 'Парк Сосновка. Эпицентр гонок и спортивных эмоций.'
+    }, { preset: 'islands#redIcon' });
+
+    var markPoint9 = new ymaps.Placemark([60.022283, 30.338513], {
+        balloonContentHeader: '<b>Всесоюзное стрельбище</b>',
+        balloonContentBody: 'Парк Сосновка. Лучший стрелковый комплекс в СССР.'
+    }, { preset: 'islands#redIcon' });
+
+     var markPoint6 = new ymaps.Placemark([60.026051, 30.324905], {
+        balloonContentHeader: '<b>Дача А. Ф. Толстого</b>',
+        balloonContentBody: 'пр. Тореза, 89. Особняк правнука фельдмаршала Кутузова.'
+    }, { preset: 'islands#redIcon' });
+    
+    var markPoint10 = new ymaps.Placemark([60.029818, 30.320637], {
+        balloonContentHeader: '<b>Дача доктора Бадмаева</b>',
+        balloonContentBody: 'пр. Тореза, 101. Особняк с восточной башенкой на Поклонной горе.'
+    }, { preset: 'islands#redIcon' });
+
+    // Добавляем все точки на карту
+    myMap.geoObjects
+        .add(markPoint1)
+        .add(markPoint2)
+        .add(markPoint3)
+        .add(markPoint4)
+        .add(markPoint5)
+        .add(markPoint6)
+        .add(markPoint7)
+        .add(markPoint8)
+        .add(markPoint9)
+        .add(markPoint10);
+}
+
+    function scrollCarousel(carouselId, distance) {
+        const carousel = document.getElementById(carouselId);
+        if (carousel) {
+            carousel.scrollBy({ left: distance, behavior: 'smooth' });
+        }
+    }
+
+    const progressFill = document.getElementById('progressFill');
+    const backToTopBtn = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        
+        if (progressFill) progressFill.style.height = `${scrollPercent}%`;
+
+        if (backToTopBtn) {
+            if (scrollTop > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        }
+    });
+
+    function toggleAccessibility() {
+        document.body.classList.toggle('accessible-mode');
+        const isAccessible = document.body.classList.contains('accessible-mode');
+        localStorage.setItem('accessibleMode', isAccessible);
+        if (typeof updateTramPosition === 'function') updateTramPosition();
+    }
+
+    const steamTram = document.getElementById('steamTram');
+    const routeSection = document.getElementById('route');
+
+    const tramRoute = [
+        { x: -0.40, y: 0.10 },
+        { x:  0.10, y: 0.25 },
+        { x:  0.90, y: 0.45 },
+        { x:  0.40, y: 0.65 },
+        { x:  1.20, y: 0.85 }
+    ];
+
+    function smoothStep(t) { return t * t * (3 - 2 * t); }
+
+    function getTramPoint(progress) {
+        const segments = tramRoute.length - 1;
+        const position = progress * segments;
+        const index = Math.min(Math.floor(position), segments - 1);
+        const localT = smoothStep(position - index);
+
+        const p1 = tramRoute[index];
+        const p2 = tramRoute[index + 1];
+
+        return {
+            x: p1.x + (p2.x - p1.x) * localT,
+            y: p1.y + (p2.y - p1.y) * localT
+        };
+    }
+
+    function updateTramPosition() {
+        if (!steamTram || !routeSection) return;
+
+        const scrollTop = window.scrollY;
+        const endScroll = routeSection.offsetTop - window.innerHeight * 0.5;
+
+        if (endScroll <= 0) return;
+
+        const rawProgress = scrollTop / endScroll;
+        const progress = Math.min(Math.max(rawProgress, 0), 1);
+
+        if (rawProgress > 1.05) {
+            steamTram.style.opacity = '0';
+            return;
+        } else {
+            steamTram.style.opacity = '1';
+        }
+
+        const point = getTramPoint(progress);
+        const currentX = point.x * window.innerWidth;
+        const currentY = point.y * window.innerHeight;
+
+        const lookAhead = Math.min(progress + 0.005, 1);
+        const nextPoint = getTramPoint(lookAhead);
+        const direction = nextPoint.x - point.x;
+        const scaleX = direction >= 0 ? 1 : -1;
+
+        const slope = (nextPoint.y - point.y) / Math.max(Math.abs(direction), 0.03);
+        const rotation = Math.max(-4, Math.min(4, slope * 2.5));
+
+        steamTram.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) rotate(${rotation}deg) scaleX(${scaleX})`;
+    }
+
+    window.addEventListener('scroll', updateTramPosition, { passive: true });
+    window.addEventListener('resize', updateTramPosition);
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', updateTramPosition);
+    } else {
+        updateTramPosition();
+    }
+    </script>
+<script>
+    // Логика увеличения картин в разделе "В образах"
+    const modal = document.getElementById('artModal');
+    const modalImg = document.getElementById('modalImg');
+    const zoomImages = document.querySelectorAll('.art-zoom-img');
+    const closeBtn = modal.querySelector('span');
+
+    zoomImages.forEach(img => {
+        img.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            modalImg.src = img.src;
+        });
+    });
+
+    // Закрытие по клику на крестик или на темный фон
+    modal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+</script>
+</body>
+</html>
