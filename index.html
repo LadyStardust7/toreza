@@ -47,27 +47,51 @@
         .nav-link.btn-cta { background: var(--accent-vermilion); color: #ffffff; padding: 8px 16px; border-radius: 20px; }
 
         /* Кнопка мобильного меню (бутерброд) */
-        .nav-toggle { 
-            display: none; 
-            flex-direction: column; 
-            justify-content: space-between; 
-            width: 30px; 
-            height: 22px; 
-            background: transparent !important; 
-            border: none; 
-            cursor: pointer; 
-            z-index: 10002; 
-            flex-shrink: 0; 
-        }
+        
+/* Мобильная кнопка меню */
+.nav-toggle {
+    display: none;
+    flex: 0 0 42px;
+    width: 42px !important;
+    min-width: 42px;
+    height: 38px !important;
+    min-height: 38px;
+    padding: 0 !important;
+    margin: 0;
+    border: none !important;
+    border-radius: 0;
+    background: transparent !important;
+    box-shadow: none !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    position: relative;
+    z-index: 10002;
+    -webkit-appearance: none;
+    appearance: none;
+}
 
-      .nav-toggle span { 
-            width: 100%; 
-            height: 3px; 
-            background-color: var(--accent-vermilion) !important; 
-            border-radius: 3px; 
-            transition: transform 0.3s ease, opacity 0.3s ease; 
-            display: block !important;
-        }
+/* Три красные полоски */
+.site-nav .nav-toggle span {
+    display: block !important;
+    width: 28px !important;
+    min-width: 28px;
+    height: 3px !important;
+    min-height: 3px;
+    max-height: 3px;
+    padding: 0 !important;
+    margin: 0 !important;
+    flex: 0 0 3px;
+    background: #E73121 !important;
+    border: none !important;
+    border-radius: 2px;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none !important;
+}
         .nav-toggle.open span:nth-child(1) { transform: translateY(9.5px) rotate(45deg); }
         .nav-toggle.open span:nth-child(2) { opacity: 0; }
         .nav-toggle.open span:nth-child(3) { transform: translateY(-9.5px) rotate(-45deg); }
