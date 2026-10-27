@@ -863,6 +863,7 @@
             </div>
         </section>
 
+       <!-- Раздел 07: Ваша история -->
         <section id="your-story">
             <div class="section-title-wrap">
                 <span class="section-num">07</span>
@@ -870,11 +871,18 @@
             </div>
             <div class="card" style="background: #ffffff; color: var(--text-main);">
                 <p style="margin-bottom: 18px; color: #4A4A4A;">Поделитесь своими воспоминаниями или фотографиями проспекта Тореза!</p>
-                <form>
-                    <input type="text" placeholder="Ваше имя" required>
-                    <textarea rows="4" placeholder="Ваша история или воспоминание о проспекте..." required></textarea>
-                    <button type="button" onclick="alert('Спасибо! История отправлена.')">Отправить историю</button>
+                
+                <!-- Форма с твоим уникальным кодом Formspree -->
+                <form id="storyForm" action="https://formspree.io/f/mgaaabjw" method="POST">
+                    <input type="text" name="Имя" placeholder="Ваше имя" required>
+                    <textarea name="История" rows="4" placeholder="Ваша история или воспоминание о проспекте..." required></textarea>
+                    <button type="submit" id="submitBtn">Отправить историю</button>
                 </form>
+
+                <!-- Сообщение об успешной отправке -->
+                <div id="formSuccess" style="display: none; margin-top: 15px; padding: 18px; background: var(--accent-tint); color: var(--accent-vermilion); border-radius: 12px; font-family: var(--font-heading); font-weight: 700; text-align: center;">
+                    Спасибо! Ваша история успешно отправлена в народный архив. ❤️
+                </div>
             </div>
         </section>
 
