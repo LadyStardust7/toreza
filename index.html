@@ -221,17 +221,19 @@
 
     <div class="scroll-progress-line"><div class="scroll-progress-fill" id="progressFill"></div></div>
 
-    <nav class="site-nav">
+   <nav class="site-nav">
         <div class="nav-container">
             <a href="#" class="nav-brand">Проспект Тореза</a>
             <button class="nav-toggle" id="navToggle" aria-label="Открыть меню">
                 <span></span><span></span><span></span>
             </button>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="#chronicle" class="nav-link">Летопись</a></li>
+                <li><a href="#kravchenko" class="nav-link">Лесной</a></li>
+                <li><a href="#vsevolodov" class="nav-link">Тореза</a></li>
                 <li><a href="#route" class="nav-link">Маршрут</a></li>
                 <li><a href="#lessner-comparison" class="nav-link">Век спустя</a></li>
-                <li><a href="#archive" class="nav-link">Народный архив</a></li>
+                <li><a href="#museum" class="nav-link">Музей</a></li>
+                <li><a href="#archive" class="nav-link">Архив</a></li>
                 <li><a href="#art" class="nav-link">В образах</a></li>
                 <li><a href="#books" class="nav-link">Книги</a></li>
                 <li><a href="#your-story" class="nav-link btn-cta">Ваша история</a></li>
@@ -374,8 +376,12 @@
                 </div>
             </div>
         </section>
-            <!-- Блок маршрута и карты -->
-        <section id="route" style="margin-top: 40px; margin-bottom: 60px;">
+           <!-- Раздел 03: Интерактивный маршрут -->
+        <section id="route" style="margin-top: 60px; margin-bottom: 60px;">
+            <div class="section-title-wrap">
+                <span class="section-num">03</span>
+                <h2 class="section-title">Маршрут прогулки</h2>
+            </div>
             <div id="map"></div>
       <!-- Карусель карточек: 10 точек с исправленной типографикой -->
         <div class="carousel-wrapper" style="margin-top: 30px; margin-bottom: 50px;">
@@ -497,7 +503,7 @@
         </section>
  <section id="lessner-comparison">
             <div class="section-title-wrap">
-                <span class="section-num">03</span>
+                <span class="section-num">04</span>
                 <h2 class="section-title">Век спустя</h2>
             </div>
             <p style="margin-bottom: 20px; color: #555555;">Потяните ползунок в центре вправо или влево, чтобы сравнить исторический облик особняка с его современным состоянием:</p>
@@ -518,10 +524,24 @@
             </div>
         </section>
 
-       <!-- Раздел 04: Народный архив -->
+      <!-- Раздел 05: Музей -->
+        <section id="museum" style="margin-top: 60px;">
+            <div class="section-title-wrap">
+                <span class="section-num">05</span>
+                <h2 class="section-title">Цифровой музей</h2>
+            </div>
+            <p style="margin-bottom: 25px; color: #555555;">Интерактивные 3D-экспонаты и подлинные артефакты, найденные на проспекте Тореза:</p>
+            
+            <div style="background: #ffffff; border-radius: 20px; padding: 40px; text-align: center; border: 1px dashed var(--accent-vermilion);">
+                <p style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: var(--accent-vermilion); margin-bottom: 8px;">Экспозиция готовится к открытию 🏛️</p>
+                <p style="font-size: 0.9rem; color: #666;">Совсем скоро здесь можно будет рассмотреть 3D-модели находок в деталях со всех сторон.</p>
+            </div>
+        </section>
+
+        <!-- Раздел 06: Народный архив -->
         <section id="archive">
             <div class="section-title-wrap">
-                <span class="section-num">04</span>
+                <span class="section-num">06</span>
                 <h2 class="section-title">Народный архив</h2>
             </div>
             <p style="margin-bottom: 25px; color: #555555;">Подлинные свидетельства, анкеты, рукописи и стихи жителей и читателей о жизни на проспекте Тореза:</p>
@@ -568,10 +588,10 @@
             </div>
         </section>
 
-       <!-- Раздел 05: В образах -->
+       <!-- Раздел 07: В образах -->
         <section id="art" style="margin-top: 60px;">
             <div class="section-title-wrap">
-                <span class="section-num">05</span>
+                <span class="section-num">07</span>
                 <h2 class="section-title">В образах</h2>
             </div>
             
@@ -719,7 +739,7 @@
        <!-- Раздел Книги с персональными ссылками на каждую книгу -->
         <section id="books">
             <div class="section-title-wrap">
-                <span class="section-num">06</span>
+                <span class="section-num">08</span>
                 <h2 class="section-title">Книги</h2>
             </div>
             <p style="margin-bottom: 20px; color: #555555;">Издания из фонда нашей библиотеки об истории Выборгского района и проспекта Тореза:</p>
@@ -882,10 +902,10 @@
             </div>
         </section>
 
-       <!-- Раздел 07: Ваша история -->
+       <!-- Раздел 09: Ваша история -->
         <section id="your-story">
             <div class="section-title-wrap">
-                <span class="section-num">07</span>
+                <span class="section-num">09</span>
                 <h2 class="section-title">Ваша история</h2>
             </div>
             <div class="card" style="background: #ffffff; color: var(--text-main);">
@@ -923,16 +943,18 @@
                 <p>📞 +7 (812) 246-93-01</p>
                 <p>✉️ <a href="mailto:toreza@cbsvib.ru">toreza@cbsvib.ru</a></p>
             </div>
-            <div class="footer-col">
+           <div class="footer-col">
                 <h4>Навигация</h4>
                 <ul>
-                    <li><a href="#chronicle">01. Летопись</a></li>
-                    <li><a href="#route">02. Маршрут</a></li>
-                    <li><a href="#lessner-comparison">03. Век спустя</a></li>
-                    <li><a href="#archive">04. Народный архив</a></li>
-                    <li><a href="#art">05. В образах</a></li>
-                    <li><a href="#books">06. Книги</a></li>
-                    <li><a href="#your-story">07. Ваша история</a></li>
+                    <li><a href="#kravchenko">01. Лесной</a></li>
+                    <li><a href="#vsevolodov">02. Тореза</a></li>
+                    <li><a href="#route">03. Маршрут</a></li>
+                    <li><a href="#lessner-comparison">04. Век спустя</a></li>
+                    <li><a href="#museum">05. Музей</a></li>
+                    <li><a href="#archive">06. Архив</a></li>
+                    <li><a href="#art">07. В образах</a></li>
+                    <li><a href="#books">08. Книги</a></li>
+                    <li><a href="#your-story">09. Ваша история</a></li>
                 </ul>
             </div>
            <div class="footer-col">
@@ -1171,7 +1193,7 @@ function initMap() {
         }
     });
 </script>
-    <script>
+<script>
     const storyForm = document.getElementById('storyForm');
     const formSuccess = document.getElementById('formSuccess');
     const submitBtn = document.getElementById('submitBtn');
