@@ -16,7 +16,20 @@
         .photo-block img { max-width: 100%; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .photo-caption { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #666666; margin-top: 10px; font-style: italic; }
         .back-link { font-family: 'Unbounded', sans-serif; font-size: 0.85rem; color: #E73121; text-decoration: none; font-weight: 700; display: inline-block; margin-bottom: 30px; text-transform: uppercase; }
-        @media (max-width: 600px) { .article-container { padding: 25px; } h1 { font-size: 1.5rem; } }
+      @media screen and (max-width: 768px) {
+    .article-container { 
+        padding: 25px; 
+    } 
+    h1 { 
+        font-size: 1.5rem; 
+    }
+    blockquote {
+        font-size: 1.05rem !important;
+        line-height: 1.5 !important;
+        padding-left: 12px !important;
+        margin: 15px 0 !important;
+    }
+}
     </style>
 </head>
 <body>
