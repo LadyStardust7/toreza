@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Место дуэли М. Ю. Лермонтова — Проспект Тореза</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Unbounded:wght@600;800;900&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <style>
+  <style>
         body { font-family: 'Merriweather', serif; background-color: #F9F8F6; color: #222222; line-height: 1.8; margin: 0; padding: 40px 20px; }
         .article-container { max-width: 780px; margin: 0 auto; background: #ffffff; padding: 50px; border-radius: 20px; box-shadow: 0 4px 25px rgba(0,0,0,0.05); border: 1px solid #EAEAEA; }
         h1 { font-family: 'Unbounded', sans-serif; font-size: 1.8rem; color: #111111; margin-bottom: 10px; line-height: 1.25; text-transform: uppercase; }
@@ -21,10 +21,29 @@
 
         .back-link { font-family: 'Unbounded', sans-serif; font-size: 0.85rem; color: #E73121; text-decoration: none; font-weight: 700; display: inline-block; margin-bottom: 30px; text-transform: uppercase; }
         .back-link:hover { text-decoration: none; }
-      @media (max-width: 650px) { 
-            .article-container { padding: 25px; } 
-            h1 { font-size: 1.4rem; }
+
+        /* Мобильная адаптация */
+        @media (max-width: 650px) { 
+            body { padding: 15px 10px; }
+            .article-container { padding: 20px 15px; } 
+            
+            h1 { font-size: 1.3rem; }
             .no-break-title { white-space: normal !important; } /* Разрешаем перенос на мобилках */
+            
+            /* Уменьшаем цитату на смартфонах */
+            .lead-quote {
+                font-size: 0.95rem !important;
+                line-height: 1.5 !important;
+                padding-left: 14px !important;
+                margin: 20px 0 !important;
+            }
+
+            /* Уменьшаем основной текст, чтобы не выглядел огромным */
+            p {
+                font-size: 0.9rem !important;
+                line-height: 1.6 !important;
+            }
+
             .article-gallery { grid-template-columns: 1fr; }
         }
     </style>
