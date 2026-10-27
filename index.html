@@ -1152,5 +1152,44 @@ function initMap() {
         }
     });
 </script>
+    <script>
+    const storyForm = document.getElementById('storyForm');
+    const formSuccess = document.getElementById('formSuccess');
+    const submitBtn = document.getElementById('submitBtn');
+
+    if (storyForm) {
+        storyForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            submitBtn.textContent = 'Отправка...';
+            submitBtn.style.opacity = '0.7';
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch(storyForm.action, {
+                    method: 'POST',
+                    body: new FormData(storyForm),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    storyForm.reset();
+                    storyForm.style.display = 'none';
+                    formSuccess.style.display = 'block';
+                } else {
+                    alert('Ой, произошла ошибка при отправке. Попробуйте еще раз!');
+                    submitBtn.textContent = 'Отправить историю';
+                    submitBtn.style.opacity = '1';
+                    submitBtn.disabled = false;
+                }
+            } catch (error) {
+                alert('Ошибка сети. Проверьте подключение к интернету.');
+                submitBtn.textContent = 'Отправить историю';
+                submitBtn.style.opacity = '1';
+                submitBtn.disabled = false;
+            }
+        });
+    }
+</script>
 </body>
 </html>
