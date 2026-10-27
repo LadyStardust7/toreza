@@ -1157,15 +1157,6 @@ function initMap() {
         const isAccessible = document.body.classList.contains('accessible-mode');
         localStorage.setItem('accessibleMode', isAccessible);
     }
-
-    window.addEventListener('scroll', updateTransports, { passive: true });
-    window.addEventListener('resize', updateTransports);
-    
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', updateTransports);
-    } else {
-        updateTransports();
-    }
     </script>
 <script>
     // Логика увеличения картин в разделе "В образах"
