@@ -563,19 +563,78 @@
             </div>
         </section>
 
-      <!-- Раздел 05: Музей -->
-        <section id="museum" style="margin-top: 60px;">
-            <div class="section-title-wrap">
-                <span class="section-num">05</span>
-                <h2 class="section-title">Цифровой музей</h2>
-            </div>
-            <p style="margin-bottom: 25px; color: #555555;">Интерактивные 3D-экспонаты и подлинные артефакты, найденные на проспекте Тореза:</p>
-            
-            <div style="background: #ffffff; border-radius: 20px; padding: 40px; text-align: center; border: 1px dashed var(--accent-vermilion);">
-                <p style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: var(--accent-vermilion); margin-bottom: 8px;">Экспозиция готовится к открытию 🏛️</p>
-                <p style="font-size: 0.9rem; color: #666;">Совсем скоро здесь можно будет рассмотреть 3D-модели находок в деталях со всех сторон.</p>
-            </div>
-        </section>
+     <!-- Раздел 05: Музей -->
+<section id="museum" style="margin-top: 60px;">
+    <div class="section-title-wrap">
+        <span class="section-num">05</span>
+        <h2 class="section-title">Цифровой музей</h2>
+    </div>
+    <p style="margin-bottom: 25px; color: #555555;">Интерактивные 3D-экспонаты и подлинные артефакты, найденные на проспекте Тореза:</p>
+    
+    <!-- Интерактивная витрина (вместо заглушки) -->
+    <div style="background: #ffffff; border-radius: 20px; padding: 30px; border: 1px solid #e2dad0; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
+      
+      <!-- Кнопки переключения экспонатов -->
+      <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;" id="artifact-tabs">
+        <button onclick="switchArtifact('brick')" class="tab-btn" data-type="brick" style="padding: 8px 16px; background: var(--accent-vermilion); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.2s;">Кирпич с клеймом</button>
+        <button onclick="switchArtifact('stamp')" class="tab-btn" data-type="stamp" style="padding: 8px 16px; background: #f4f1ea; color: #333; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all.2s;">Почтовая марка</button>
+        <button onclick="switchArtifact('nail')" class="tab-btn" data-type="nail" style="padding: 8px 16px; background: #f4f1ea; color: #333; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.2s;">Кованый гвоздь</button>
+      </div>
+
+      <!-- Зона 3D-просмотра -->
+      <div style="background: #f4f1ea; border-radius: 12px; overflow: hidden; padding: 10px;">
+        <model-viewer 
+          id="museum-viewer"
+          src="brick.glb" 
+          alt="3D-экспонат музея" 
+          auto-rotate 
+          camera-controls 
+          shadow-intensity="1"
+          exposure="1"
+          style="width: 100%; height: 450px; background-color: #f4f1ea;"
+        >
+          <div slot="progress-bar" style="color: #333; text-align: center; padding-top: 200px; font-family: var(--font-heading);">Загрузка экспоната...</div>
+        </model-viewer>
+        
+        <!-- Динамическая подпись -->
+        <p id="artifact-caption" style="text-align: center; margin: 14px 0 6px 0; font-weight: 600; color: #333; font-size: 1rem;">
+          Кирпич строительный с заводским клеймом (конец XIX — начало XX вв.)
+        </p>
+      </div>
+    </div>
+</section>
+
+<!-- Скрипт для переключения моделей (можно вынести в общий JS-файл или оставить здесь) -->
+<script>
+  function switchArtifact(type) {
+    const viewer = document.getElementById('museum-viewer');
+    const caption = document.getElementById('artifact-caption');
+    const buttons = document.querySelectorAll('#artifact-tabs button');
+    
+    // Переключаем цвета кнопок
+    buttons.forEach(btn => {
+      btn.style.background = '#f4f1ea';
+      btn.style.color = '#333';
+    });
+    const activeBtn = document.querySelector(`#artifact-tabs button[data-type="${type}"]`);
+    if (activeBtn) {
+      activeBtn.style.background = 'var(--accent-vermilion)';
+      activeBtn.style.color = 'white';
+    }
+
+    // Меняем модель и подпись
+    if (type === 'brick') {
+      viewer.src = 'brick.glb';
+      caption.textContent = 'Кирпич строительный с заводским клеймом (конец XIX — начало XX вв.)';
+    } else if (type === 'stamp') {
+      viewer.src = 'stamp.glb';
+      caption.textContent = 'Почтовая марка эпохи конструктивизма / советского периода';
+    } else if (type === 'nail') {
+      viewer.src = 'nail.glb';
+      caption.textContent = 'Кованый ручной гвоздь (фрагмент исторических конструкций)';
+    }
+  }
+</script>
 
         <!-- Раздел 06: Народный архив -->
         <section id="archive">
