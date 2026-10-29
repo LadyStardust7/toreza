@@ -613,30 +613,33 @@
           <img id="museum-photo" src="brick.jpg" alt="Реальное фото экспоната" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px;">
         </div>
         
-        <!-- Динамическая подпись к экспонату -->
-        <p id="artifact-caption" style="text-align: center; margin: 12px 0 4px 0; font-weight: 600; color: #333; font-size: 0.95rem;">
-          Кирпич строительный с заводским клеймом «СТРЕЛИНЪ» (конец XIX — начало XX вв.)
-        </p>
+       <!-- Динамическая подпись и описание к экспонату -->
+        <div style="text-align: center; margin: 14px 0 4px 0;">
+          <p id="artifact-caption" style="font-weight: 700; color: #333; font-size: 0.95rem; margin-bottom: 6px;"></p>
+          <p id="artifact-desc" style="font-size: 0.85rem; color: #666; line-height: 1.5; max-width: 650px; margin: 0 auto;"></p>
+        </div>
       </div>
     </div>
-
-    <!-- Скрипт переключения (ставим в самом конце раздела) -->
-    <script>
+    
+   <script>
       const artifactsData = {
         brick: {
           glb: 'brick.glb',
           photo: 'brick.jpg',
-          caption: 'Кирпич строительный с заводским клеймом «СТРЕЛИНЪ» (конец XIX — начало XX вв.)'
+          caption: 'Кирпич строительный с заводским клеймом «СТРЕЛИНЪ» (конец XIX — начало XX вв.)',
+          desc: 'Найден на пр. Тореза напротив парка Сосновка (передан в библиотеку читателем). Стрелины — целая династия купцов и промышленников, владевших кирпичными заводами в Санкт-Петербурге в XIX веке (основатель — Макарий Тимофеевич Стрелин).'
         },
         stamp: {
           glb: 'stamp.glb',
           photo: 'stamp.jpg',
-          caption: 'Почтовая марка эпохи конструктивизма / советского периода'
+          caption: 'Почтовая марка. СССР 1964 г. Памяти Мориса Тореза',
+          desc: 'Из филателистической коллекции читательницы. Морис Торез с 1930 по 1964 год руководил Французской коммунистической партией. В 1964 году, в память о прославленном деятеле, в СССР был отпечатан тираж этих марок.'
         },
         nail: {
           glb: 'nail.glb',
           photo: 'nail.jpg',
-          caption: 'Кованый ручной гвоздь (фрагмент исторических конструкций)'
+          caption: 'Гвоздь кованый 37 см (найден в районе пр. Тореза и Рашетовой ул.)',
+          desc: 'Передан в библиотеку читателем. Предназначен для крепления толстых досок или бруса. Применялся в строительстве деревянных домов или при возведении каркасов, где требуется крепёж элементов значительной толщины.'
         }
       };
 
@@ -657,11 +660,12 @@
           activeBtn.style.color = 'white';
         }
 
-        // Обновляем ресурсы
+        // Обновляем ресурсы и тексты
         const data = artifactsData[type];
         document.getElementById('museum-viewer').src = data.glb;
         document.getElementById('museum-photo').src = data.photo;
         document.getElementById('artifact-caption').textContent = data.caption;
+        document.getElementById('artifact-desc').textContent = data.desc;
       }
 
       function switchMode(mode) {
@@ -687,6 +691,11 @@
           btn3d.style.color = '#333';
         }
       }
+
+      // Инициализация текста при загрузке страницы для кирпича по умолчанию
+      window.addEventListener('DOMContentLoaded', () => {
+        switchArtifact('brick');
+      });
     </script>
 </section>
 
