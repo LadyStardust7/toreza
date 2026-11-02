@@ -628,123 +628,136 @@
                 <h2 class="section-title">Маршрут прогулки</h2>
             </div>
             <div id="map"></div>
-      <!-- Карусель карточек: 10 точек с исправленной типографикой -->
-        <div class="carousel-wrapper" style="margin-top: 30px; margin-bottom: 50px;">
-            <button class="carousel-btn prev" onclick="scrollCarousel('pointsCarousel', -320)">❮</button>
-            <button class="carousel-btn next" onclick="scrollCarousel('pointsCarousel', 320)">❯</button>
-            
-            <div class="carousel" id="pointsCarousel" style="padding: 10px 4px 20px;">
-                
-                <!-- 01. Площадь Мужества -->
-                <div class="card" id="point-1" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
-                    <div>
-                        <div class="card-num">01</div>
-                        <span class="tag">Символ эпохи</span>
-                        <h3>Площадь Мужества</h3>
-                        <p>Начало маршрута. Исторический перекресток Спасской дачи, ставший в&nbsp;перестроечные годы центром кооперативных ларьков и&nbsp;духа свободы.</p>
-                    </div>
-                    <a href="point-01-muzhestva.html" class="card-action">Читать историю →</a>
-                </div>
+    <!-- Карусель карточек: 11 точек -->
+      <div class="carousel-wrapper" style="margin-top: 30px; margin-bottom: 50px;">
+          <button class="carousel-btn prev" onclick="scrollCarousel('pointsCarousel', -320)">❮</button>
+          <button class="carousel-btn next" onclick="scrollCarousel('pointsCarousel', 320)">❯</button>
+          
+          <div class="carousel" id="pointsCarousel" style="padding: 10px 4px 20px;">
+              
+              <!-- 01. Площадь Мужества -->
+              <div class="card" id="point-1" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+                  <div>
+                      <div class="card-num">01</div>
+                      <span class="tag">Символ эпохи</span>
+                      <h3>Площадь Мужества</h3>
+                      <p>Начало маршрута. Исторический перекресток Спасской дачи, ставший в&nbsp;перестроечные годы центром кооперативных ларьков и&nbsp;духа свободы.</p>
+                  </div>
+                  <a href="point-01-muzhestva.html" class="card-action">Читать историю →</a>
+              </div>
 
               <!-- 02. Дом Котлова -->
-<div class="card" id="point-2" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
-    <div>
-        <div class="card-num">02</div>
-        <span class="tag">Пр. Тореза, 8</span>
-        <h3>Дом Котлова</h3>
-        <p>Особняк купца Котлова в&nbsp;стиле модерн-замка. По&nbsp;легенде, здесь бывал Ф.&nbspИ.&nbspШаляпин, а&nbsp;в&nbsp;Блокаду работала библиотека («Огонёк в&nbsp;Лесном»).</p>
-    </div>
-    <a href="point-02-kotlov.html" class="card-action">Читать историю →</a>
-</div>
+              <div class="card" id="point-2" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+                  <div>
+                      <div class="card-num">02</div>
+                      <span class="tag">Пр. Тореза, 8</span>
+                      <h3>Дом Котлова</h3>
+                      <p>Особняк купца Котлова в&nbsp;стиле модерн-замка. По&nbsp;легенде, здесь бывал Ф.&nbsp;И.&nbsp;Шаляпин, а&nbsp;в&nbsp;Блокаду работала библиотека («Огонёк в&nbsp;Лесном»).</p>
+                  </div>
+                  <a href="point-02-kotlov.html" class="card-action">Читать историю →</a>
+              </div>
 
-               <!-- 03. Дом коменданта -->
-<div class="card" id="point-3" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
-    <div>
-        <div class="card-num">03</div>
-        <span class="tag">Пр. Тореза, 29</span>
-        <h3>Дом Н. Н. Кайгородова</h3>
-        <p>Старинный особняк бывшего коменданта, где жил известный меценат. Ныне здесь располагается подразделение ГИБДД.</p>
-    </div>
-    <a href="point-03-kaigorodov.html" class="card-action">Читать историю →</a>
-</div>
+              <!-- 03. Библиотека им. Д. С. Лихачева -->
+              <div class="card" id="point-3" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+                  <div>
+                      <div class="card-num">03</div>
+                      <span class="tag">Пр. Тореза, 32</span>
+                      <h3>Библиотека им. Д. С. Лихачева</h3>
+                      <p>Культурное сердце проспекта Тореза. Хранительница истории Лесного, место встреч краеведов и&nbsp;инициатор присвоения имени академика Д.&nbsp;С.&nbsp;Лихачева.</p>
+                  </div>
+                  <a href="point-03-library.html" class="card-action">Читать историю →</a>
+              </div>
 
-               <!-- 04. Гостиница Спутник -->
-<div class="card" id="point-4" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
-    <div>
-        <div class="card-num">04</div>
-        <span class="tag">Пр. Тореза, 36</span>
-        <h3>Гостиница «Спутник»</h3>
-        <p>Культовая советская гостиница арх.&nbsp;В.&nbsp;Белова. На&nbsp;первом этаже работал киоск с&nbsp;импортной жвачкой и&nbsp;зарубежной прессой.</p>
-    </div>
-    <a href="point-04-sputnik.html" class="card-action">Читать историю →</a>
-</div>
+              <!-- 04. Дом коменданта -->
+              <div class="card" id="point-4" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+                  <div>
+                      <div class="card-num">04</div>
+                      <span class="tag">Пр. Тореза, 29</span>
+                      <h3>Дом Н. Н. Кайгородова</h3>
+                      <p>Старинный особняк бывшего коменданта, где жил известный меценат. Ныне здесь располагается подразделение ГИБДД.</p>
+                  </div>
+                  <a href="point-03-kaigorodov.html" class="card-action">Читать историю →</a>
+              </div>
 
-               <!-- 05. Приют Лепта -->
-<div class="card" id="point-5" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
-    <div>
-        <div class="card-num">05</div>
-        <span class="tag">Пр. Тореза, 38</span>
-        <h3>Приют «Лепта»</h3>
-        <p>Дореволюционное Общество попечения о&nbsp;бедных детях и&nbsp;пожилых женщинах Лесного. Нынче на&nbsp;месте здания стоит жилой дом.</p>
-    </div>
-    <a href="point-05-lepta.html" class="card-action">Читать историю →</a>
-</div>
-               <!-- 06. Сосновка: Место дуэли -->
-<div class="card" id="point-6" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
-    <div>
-        <div class="card-num">06</div>
-        <span class="tag">Парк Сосновка</span>
-        <h3>Место дуэли Лермонтова</h3>
-        <p>Уголок Сосновки, где в&nbsp;1840 году состоялась бескровная, но&nbsp;роковая дуэль М.&nbsp;Ю.&nbsp;Лермонтова с&nbsp;сыном французского посла Э.&nbsp;де&nbsp;Барантом.</p>
-    </div>
-    <a href="point-07-lermontov.html" class="card-action">Читать историю →</a>
-</div>
+              <!-- 05. Гостиница Спутник -->
+              <div class="card" id="point-5" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+                  <div>
+                      <div class="card-num">05</div>
+                      <span class="tag">Пр. Тореза, 36</span>
+                      <h3>Гостиница «Спутник»</h3>
+                      <p>Культовая советская гостиница арх.&nbsp;В.&nbsp;Белова. На&nbsp;первом этаже работал киоск с&nbsp;импортной жвачкой и&nbsp;зарубежной прессой.</p>
+                  </div>
+                  <a href="point-04-sputnik.html" class="card-action">Читать историю →</a>
+              </div>
 
-               <!-- 07. Сосновка: Мототрек -->
-<div class="card" id="point-7" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
-    <div>
-        <div class="card-num">07</div>
-        <span class="tag">Парк Сосновка</span>
-        <h3>Легендарный мототрек</h3>
-        <p>Эпицентр азарта и&nbsp;скорости, где каждые выходные проходили гонки, а&nbsp;трибуны кипели от&nbsp;эмоций ленинградских болельщиков.</p>
-    </div>
-    <a href="point-08-mototrek.html" class="card-action">Читать историю →</a>
-</div>
+              <!-- 06. Приют Лепта -->
+              <div class="card" id="point-6" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+                  <div>
+                      <div class="card-num">06</div>
+                      <span class="tag">Пр. Тореза, 38</span>
+                      <h3>Приют «Лепта»</h3>
+                      <p>Дореволюционное Общество попечения о&nbsp;бедных детях и&nbsp;пожилых женщинах Лесного. Нынче на&nbsp;месте здания стоит жилой дом.</p>
+                  </div>
+                  <a href="point-05-lepta.html" class="card-action">Читать историю →</a>
+              </div>
 
-                <!-- 08. Сосновка: Стрельбище -->
-<div class="card" id="point-8" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
-    <div>
-        <div class="card-num">08</div>
-        <span class="tag">Парк Сосновка</span>
-        <h3>Всесоюзное стрельбище</h3>
-        <p>Лучший стрелковый комплекс Военно-охотничьего общества в&nbsp;СССР, где проводились чемпионаты страны и&nbsp;городские кубки.</p>
-    </div>
-    <a href="point-09-strelbishche.html" class="card-action">Читать историю →</a>
-</div>
-  <!-- 09. Дача Толстого -->
-<div class="card" id="point-9" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
-    <div>
-        <div class="card-num">09</div>
-        <span class="tag">Пр. Тореза, 89</span>
-        <h3>Дача А. Ф. Толстого</h3>
-        <p>Необычный домик правнука фельдмаршала Кутузова, породивший множество таинственных городских легенд в&nbsp;советские годы.</p>
-    </div>
-    <a href="point-06-tolstoy.html" class="card-action">Читать историю →</a>
-</div>
+              <!-- 07. Сосновка: Место дуэли -->
+              <div class="card" id="point-7" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+                  <div>
+                      <div class="card-num">07</div>
+                      <span class="tag">Парк Сосновка</span>
+                      <h3>Место дуэли Лермонтова</h3>
+                      <p>Уголок Сосновки, где в&nbsp;1840 году состоялась бескровная, но&nbsp;роковая дуэль М.&nbsp;Ю.&nbsp;Лермонтова с&nbsp;сыном французского посла Э.&nbsp;де&nbsp;Барантом.</p>
+                  </div>
+                  <a href="point-07-lermontov.html" class="card-action">Читать историю →</a>
+              </div>
 
-                <!-- 10. Дача Бадмаева -->
-<div class="card" id="point-10" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
-    <div>
-        <div class="card-num">10</div>
-        <span class="tag">Пр. Тореза, 101</span>
-        <h3>Дача доктора Бадмаева</h3>
-        <p>Железобетонный особняк с&nbsp;восточной башенкой на&nbsp;Поклонной горе лекаря императорской семьи, укрывавшего здесь революционеров в&nbsp;1905 году.</p>
-    </div>
-    <a href="point-10-badmaev.html" class="card-action">Читать историю →</a>
-</div>
+              <!-- 08. Сосновка: Мототрек -->
+              <div class="card" id="point-8" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+                  <div>
+                      <div class="card-num">08</div>
+                      <span class="tag">Парк Сосновка</span>
+                      <h3>Легендарный мототрек</h3>
+                      <p>Эпицентр азарта и&nbsp;скорости, где каждые выходные проходили гонки, а&nbsp;трибуны кипели от&nbsp;эмоций ленинградских болельщиков.</p>
+                  </div>
+                  <a href="point-08-mototrek.html" class="card-action">Читать историю →</a>
+              </div>
 
-            </div>
-        </div>
+              <!-- 09. Сосновка: Стрельбище -->
+              <div class="card" id="point-9" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+                  <div>
+                      <div class="card-num">09</div>
+                      <span class="tag">Парк Сосновка</span>
+                      <h3>Всесоюзное стрельбище</h3>
+                      <p>Лучший стрелковый комплекс Военно-охотничьего общества в&nbsp;СССР, где проводились чемпионаты страны и&nbsp;городские кубки.</p>
+                  </div>
+                  <a href="point-09-strelbishche.html" class="card-action">Читать историю →</a>
+              </div>
+
+              <!-- 10. Дача Толстого -->
+              <div class="card" id="point-10" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+                  <div>
+                      <div class="card-num">10</div>
+                      <span class="tag">Пр. Тореза, 89</span>
+                      <h3>Дача А. Ф. Толстого</h3>
+                      <p>Необычный домик правнука фельдмаршала Кутузова, породивший множество таинственных городских легенд в&nbsp;советские годы.</p>
+                  </div>
+                  <a href="point-06-tolstoy.html" class="card-action">Читать историю →</a>
+              </div>
+
+              <!-- 11. Дача Бадмаева -->
+              <div class="card" id="point-11" style="min-width: 290px; max-width: 290px; flex-shrink: 0;">
+                  <div>
+                      <div class="card-num">11</div>
+                      <span class="tag">Пр. Тореза, 101</span>
+                      <h3>Дача доктора Бадмаева</h3>
+                      <p>Железобетонный особняк с&nbsp;восточной башенкой на&nbsp;Поклонной горе лекаря императорской семьи, укрывавшего здесь революционеров в&nbsp;1905 году.</p>
+                  </div>
+                  <a href="point-10-badmaev.html" class="card-action">Читать историю →</a>
+              </div>
+
+          </div>
+      </div>
         </section>
  <section id="lessner-comparison">
             <div class="section-title-wrap">
