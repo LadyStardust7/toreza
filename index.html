@@ -39,7 +39,7 @@
 
         /* Шапка */
 
-      .site-nav { 
+     .site-nav { 
             position: fixed; 
             top: 0; 
             left: 0; 
@@ -52,18 +52,18 @@
             z-index: 10000; 
             display: flex; 
             align-items: center; 
-            justify-content: center; /* Центрируем содержимое внутри fixed-шапки */
+            justify-content: center;
         }
 
         .nav-container { 
             width: 100%;
-            max-width: 1050px; /* Чуть уменьшили, чтобы гармонично смотрелось с 960px основного контента */
+            max-width: 1160px; /* Широкая шапка под стать баннеру и широким экранам */
             margin: 0 auto; 
-            padding: 0 20px; 
+            padding: 0 30px; /* Симметричные воздушные отступы по бокам */
             display: flex; 
             align-items: center; 
             justify-content: space-between; 
-            gap: 15px; 
+            gap: 12px; 
             box-sizing: border-box;
         }
 
@@ -80,7 +80,15 @@
 
         .nav-menu { display: flex; align-items: center; gap: 18px; list-style: none; }
 
-        .nav-link { font-family: var(--font-heading); font-size: 0.78rem; font-weight: 600; color: var(--text-main); text-decoration: none; white-space: nowrap; text-transform: uppercase; }
+       .nav-link { 
+            font-family: var(--font-heading); 
+            font-size: 0.75rem; 
+            font-weight: 600; 
+            color: var(--text-main); 
+            text-decoration: none; 
+            white-space: nowrap; 
+            text-transform: uppercase; 
+        }
 
         .nav-link:hover { color: var(--accent-vermilion); }
 
