@@ -43,7 +43,16 @@
 
         .nav-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 15px; }
 
-        .nav-brand { font-family: var(--font-heading); font-size: 0.85rem; font-weight: 800; color: var(--text-main); text-decoration: none; text-transform: uppercase; white-space: nowrap; z-index: 10002; }
+       .nav-brand { 
+    font-family: var(--font-heading); 
+    font-size: clamp(0.9rem, 1.2vw, 1.05rem); 
+    font-weight: 800; 
+    color: var(--text-main); 
+    text-decoration: none; 
+    text-transform: uppercase; 
+    white-space: nowrap; 
+    z-index: 10002; 
+}
 
         .nav-menu { display: flex; align-items: center; gap: 18px; list-style: none; }
 
