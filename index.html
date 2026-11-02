@@ -1345,14 +1345,53 @@
     </div>
 </div>
 
+
 <style>
+    /* Сетка полезных ресурсов */
+    .resources-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .resources-grid > a {
+        min-width: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .resources-grid h4 {
+        overflow-wrap: anywhere;
+    }
+
     @media screen and (max-width: 768px) {
         .resources-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-            padding: 0 4px !important;
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            width: 100%;
+            padding: 0 !important;
+            gap: 16px;
+        }
+
+        .resources-grid > a {
+            min-width: 0;
+            max-width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 420px) {
+        .resources-grid {
+            gap: 12px;
+        }
+
+        .resources-grid > a {
+            padding: 18px 14px !important;
         }
     }
 </style>
+
         </section>
         
        <!-- Раздел 09: Ваша история -->
