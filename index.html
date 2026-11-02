@@ -1223,12 +1223,12 @@
                     </a>
                 </div>
             </div>
-           <!-- Блок полезных ресурсов -->
+          <!-- Блок полезных ресурсов -->
 <div style="margin-top: 40px;">
     <h3 style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; margin-bottom: 20px; text-transform: uppercase; color: var(--text-main);">Полезные ресурсы</h3>
     
-    <!-- Фиксируем 4 колонки для десктопа -->
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+    <!-- Адаптивная сетка под 5 ресурсов -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
         
         <!-- 1. Citywalls -->
         <a href="https://www.citywalls.ru/" target="_blank" class="card" style="text-decoration: none; padding: 18px 16px; display: flex; flex-direction: column; justify-content: space-between;">
@@ -1246,7 +1246,15 @@
             <span style="font-size: 0.75rem; color: var(--accent-vermilion); font-weight: 700; margin-top: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Перейти ↗</span>
         </a>
 
-        <!-- 3. Мир Петербурга -->
+        <!-- 3. Топонимический портал СПб -->
+        <a href="https://toponimika.spb.ru/" target="_blank" class="card" style="text-decoration: none; padding: 18px 16px; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <h4 style="font-family: var(--font-heading); font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; color: var(--text-main);">Топонимический портал СПб</h4>
+            </div>
+            <span style="font-size: 0.75rem; color: var(--accent-vermilion); font-weight: 700; margin-top: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Перейти ↗</span>
+        </a>
+
+        <!-- 4. Мир Петербурга -->
         <a href="https://mirpeterburga.ru/" target="_blank" class="card" style="text-decoration: none; padding: 18px 16px; display: flex; flex-direction: column; justify-content: space-between;">
             <div>
                 <h4 style="font-family: var(--font-heading); font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; color: var(--text-main);">Портал «Мир Петербурга»</h4>
@@ -1254,7 +1262,7 @@
             <span style="font-size: 0.75rem; color: var(--accent-vermilion); font-weight: 700; margin-top: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Перейти ↗</span>
         </a>
 
-        <!-- 4. Площадь Мужества -->
+        <!-- 5. Площадь Мужества -->
         <a href="https://vk.ru/muzhestva" target="_blank" class="card" style="text-decoration: none; padding: 18px 16px; display: flex; flex-direction: column; justify-content: space-between;">
             <div>
                 <h4 style="font-family: var(--font-heading); font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; color: var(--text-main);">Группа ВК «Площадь Мужества»</h4>
