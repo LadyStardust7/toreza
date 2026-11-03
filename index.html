@@ -253,7 +253,7 @@
 
 .slider-label {
     position: absolute;
-    bottom: 20px; /* Подняли чуть выше, чтобы они всегда были на теле картинки */
+    bottom: 12px;
     padding: 5px 12px;
     background: rgba(0, 0, 0, 0.85);
     color: #ffffff;
@@ -265,11 +265,20 @@
     backdrop-filter: blur(4px);
     pointer-events: none;
     white-space: nowrap;
-    z-index: 20; /* Гарантированно поверх всего */
+    z-index: 20;
 }
 
-.slider-label.after { right: 20px; }
-.slider-label.before { left: 20px; }
+.slider-label.after { 
+    right: 12px; 
+    top: auto; 
+    bottom: 12px; 
+}
+
+.slider-label.before { 
+    left: 12px; 
+    top: auto; 
+    bottom: 12px; 
+}
 
 .slider-range-input {
     position: absolute;
