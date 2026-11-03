@@ -194,9 +194,8 @@
 
 
 
-        /* Слайдер сравнения */
-
-       .before-after-container {
+       /* Слайдер сравнения */
+.before-after-container {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 20px;
@@ -210,7 +209,7 @@
 .before-after-slider {
     position: relative;
     width: 100%;
-    max-width: 800px;
+    max-width: 750px; /* Синхронизировали с контейнером */
     margin: 0 auto;
     overflow: hidden;
     border-radius: 14px;
@@ -218,6 +217,7 @@
     background: #ffffff;
 }
 
+/* Фоновая картинка (Наши дни / After) */
 .slider-img.img-after {
     position: absolute;
     inset: 0;
@@ -228,28 +228,32 @@
     z-index: 1;
 }
 
+/* Контейнер-шторка (Архив / Before) */
 .img-before-wrapper {
     position: absolute;
     top: 0;
     left: 0;
-    width: 50%;
+    width: 50%; /* Управляется скриптом или инпутом */
     height: 100%;
     overflow: hidden;
     z-index: 3;
     background: #ffffff;
 }
 
+/* Картинка внутри шторки: растягиваем её на ширину родительского слайдера, 
+   чтобы она не сжималась при уменьшении ширины самой шторки */
 .img-before-wrapper img {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    max-width: none;
     height: 100%;
+    max-width: none;
     object-fit: contain;
     object-position: center;
 }
 
+/* Метки «Архив» / «Наши дни» */
 .slider-label {
     position: absolute;
     bottom: 16px;
@@ -269,6 +273,7 @@
 .slider-label.after { right: 16px; z-index: 2; }
 .slider-label.before { left: 16px; z-index: 4; }
 
+/* Невидимый ползунок (инпут) */
 .slider-range-input {
     position: absolute;
     top: 0;
@@ -280,6 +285,7 @@
     cursor: ew-resize;
 }
 
+/* Линия разделения */
 .slider-handle-line {
     position: absolute;
     top: 0;
@@ -292,6 +298,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+/* Кнопка с иконкой ↔ в центре */
 .slider-handle-button {
     position: absolute;
     top: 50%;
@@ -862,15 +869,15 @@
 
     <!-- Слайдер 1: Дом Котлова -->
     <div class="before-after-container">
-        <div class="before-after-slider" id="lessnerSlider" style="aspect-ratio: 3 / 2;">
+        <div class="before-after-slider ba-slider" style="aspect-ratio: 3 / 2;">
             <img src="lessner-after.jpg" alt="Дом Котлова современное фото" class="slider-img img-after">
             <span class="slider-label after">Наши дни</span>
-            <div class="img-before-wrapper" id="beforeWrapper">
+            <div class="img-before-wrapper" style="width: 50%;">
                 <img src="lessner-before.jpg" alt="Дом Котлова историческое фото" class="slider-img img-before">
                 <span class="slider-label before">Архив</span>
             </div>
-            <input type="range" min="0" max="100" value="50" class="slider-range-input" id="sliderRange" aria-label="Сравнить фотографии">
-            <div class="slider-handle-line" id="sliderLine">
+            <input type="range" min="0" max="100" value="50" class="slider-range-input" aria-label="Сравнить фотографии">
+            <div class="slider-handle-line" style="left: 50%;">
                 <div class="slider-handle-button">↔</div>
             </div>
         </div>
@@ -881,15 +888,15 @@
 
     <!-- Слайдер 2: Гостиница «Спутник» -->
     <div class="before-after-container">
-        <div class="before-after-slider" id="sputnikSlider" style="aspect-ratio: 4 / 3;">
+        <div class="before-after-slider ba-slider" style="aspect-ratio: 4 / 3;">
             <img src="sputnik2.jpg" alt="Гостиница Спутник современное фото" class="slider-img img-after">
             <span class="slider-label after">Наши дни</span>
-            <div class="img-before-wrapper" id="sputnikBeforeWrapper">
+            <div class="img-before-wrapper" style="width: 50%;">
                 <img src="sputnik1.jpg" alt="Гостиница Спутник историческое фото" class="slider-img img-before">
                 <span class="slider-label before">Архив</span>
             </div>
-            <input type="range" min="0" max="100" value="50" class="slider-range-input" id="sputnikSliderRange" aria-label="Сравнить фотографии">
-            <div class="slider-handle-line" id="sputnikSliderLine">
+            <input type="range" min="0" max="100" value="50" class="slider-range-input" aria-label="Сравнить фотографии">
+            <div class="slider-handle-line" style="left: 50%;">
                 <div class="slider-handle-button">↔</div>
             </div>
         </div>
@@ -900,15 +907,15 @@
 
     <!-- Слайдер 3: Двор дома № 32 -->
     <div class="before-after-container">
-        <div class="before-after-slider" id="yardSlider" style="aspect-ratio: 3 / 4; max-width: 500px;">
+        <div class="before-after-slider ba-slider" style="aspect-ratio: 3 / 4; max-width: 500px;">
             <img src="Время в объективе_Двор дома № 32 по пр. Тореза (быв. Смтаро-Парголовский_Кравченко Галина Всеволодовна.jpg" alt="Двор дома №32 современное фото" class="slider-img img-after">
             <span class="slider-label after">Наши дни</span>
-            <div class="img-before-wrapper" id="yardBeforeWrapper">
+            <div class="img-before-wrapper" style="width: 50%;">
                 <img src="Время в объективе_Галя Гагарина в своем саду. 1930-е гг._Кравченко Галина Всеволодовна.jpg" alt="Двор дома №32 историческое фото" class="slider-img img-before">
                 <span class="slider-label before">Архив</span>
             </div>
-            <input type="range" min="0" max="100" value="50" class="slider-range-input" id="yardSliderRange" aria-label="Сравнить фотографии">
-            <div class="slider-handle-line" id="yardSliderLine">
+            <input type="range" min="0" max="100" value="50" class="slider-range-input" aria-label="Сравнить фотографии">
+            <div class="slider-handle-line" style="left: 50%;">
                 <div class="slider-handle-button">↔</div>
             </div>
         </div>
@@ -1637,32 +1644,21 @@
         initMobileMenu();
     }
 
-   function initSliders() {
-        const setupSlider = (sliderId, rangeId, wrapperId, lineId) => {
-            const slider = document.getElementById(sliderId);
-            const range = document.getElementById(rangeId);
-            const beforeWrapper = document.getElementById(wrapperId);
-            const sliderLine = document.getElementById(lineId);
+  document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.ba-slider').forEach(slider => {
+            const range = slider.querySelector('.slider-range-input');
+            const beforeWrapper = slider.querySelector('.img-before-wrapper');
+            const sliderLine = slider.querySelector('.slider-handle-line');
 
-            if (!slider || !range || !beforeWrapper || !sliderLine) return;
+            if (!range || !beforeWrapper || !sliderLine) return;
 
             range.addEventListener('input', (e) => {
                 const val = e.target.value + '%';
                 beforeWrapper.style.width = val;
                 sliderLine.style.left = val;
             });
-        };
-
-        setupSlider('lessnerSlider', 'sliderRange', 'beforeWrapper', 'sliderLine');
-        setupSlider('sputnikSlider', 'sputnikSliderRange', 'sputnikBeforeWrapper', 'sputnikSliderLine');
-        setupSlider('yardSlider', 'yardSliderRange', 'yardBeforeWrapper', 'yardSliderLine');
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initSliders);
-    } else {
-        initSliders();
-    }
+        });
+    });
 
 ymaps.ready(initMap);
   function initMap() {
