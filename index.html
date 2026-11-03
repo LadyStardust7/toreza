@@ -251,6 +251,7 @@
     object-position: center;
 }
 
+/* Твои текущие общие стили (трогать не нужно, они идеальны для 2 и 3 слайдеров) */
 .slider-label {
     position: absolute;
     bottom: 12px;
@@ -268,17 +269,12 @@
     z-index: 20;
 }
 
-.slider-label.after { 
-    right: 12px; 
-    top: auto; 
-    bottom: 12px; 
-}
+.slider-label.after { right: 12px; top: auto; bottom: 12px; }
+.slider-label.before { left: 12px; top: auto; bottom: 12px; }
 
-.slider-label.before { 
-    left: 12px; 
-    top: auto; 
-    bottom: 12px; 
-}
+/* ТОЧЕЧНОЕ СМЕЩЕНИЕ ТОЛЬКО ДЛЯ ДОМА КОТЛОВА: */
+#kotlov-slider .slider-label.before { left: 22px; }
+#kotlov-slider .slider-label.after { right: 22px; }
 
 .slider-range-input {
     position: absolute;
@@ -894,7 +890,7 @@
 
 <!-- Слайдер 1: Дом Котлова -->
     <div class="before-after-container">
-        <div class="before-after-slider" style="aspect-ratio: 4 / 3;">
+        <div class="before-after-slider" id="kotlov-slider" style="aspect-ratio: 4 / 3;">
             <img src="lessner-after.jpg" alt="Дом Котлова современное фото" class="slider-img img-after">
             <span class="slider-label after">Наши дни</span>
             <div class="img-before-wrapper" style="width: 50%;">
@@ -910,7 +906,6 @@
             Дом Котлова
         </div>
     </div>
-
     <!-- Слайдер 2: Гостиница «Спутник» -->
     <div class="before-after-container">
         <div class="before-after-slider ba-slider" style="aspect-ratio: 4 / 3;">
