@@ -253,22 +253,23 @@
 
 .slider-label {
     position: absolute;
-    bottom: 16px;
-    padding: 6px 14px;
+    bottom: 20px; /* Подняли чуть выше, чтобы они всегда были на теле картинки */
+    padding: 5px 12px;
     background: rgba(0, 0, 0, 0.85);
     color: #ffffff;
     font-family: var(--font-heading);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 700;
     border-radius: 20px;
     text-transform: uppercase;
     backdrop-filter: blur(4px);
     pointer-events: none;
     white-space: nowrap;
+    z-index: 20; /* Гарантированно поверх всего */
 }
 
-.slider-label.after { right: 16px; z-index: 2; }
-.slider-label.before { left: 16px; z-index: 4; }
+.slider-label.after { right: 20px; }
+.slider-label.before { left: 20px; }
 
 .slider-range-input {
     position: absolute;
