@@ -194,7 +194,7 @@
 
 
 
-     /* Слайдер сравнения */
+   /* Слайдер сравнения */
 .before-after-container {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
@@ -216,7 +216,7 @@
     background: #ffffff;
 }
 
-/* Картинка «Наши дни» (фон) */
+/* Современное фото (фон) */
 .slider-img.img-after {
     position: absolute;
     inset: 0;
@@ -227,7 +227,7 @@
     z-index: 1;
 }
 
-/* Шторка для картинки «Архив» */
+/* Обертка шторки */
 .img-before-wrapper {
     position: absolute;
     top: 0;
@@ -239,14 +239,14 @@
     background: #ffffff;
 }
 
-/* ГЛАВНЫЙ ФИКС: Картинка внутри шторки не сжимается, а держит ровно ширину всего слайдера! */
+/* ЖЕСТКАЯ ФИКСАЦИЯ: Архивное фото имеет ТОЧНО ТАКУЮ ЖЕ ширину и положение, как фон */
 .img-before-wrapper img {
     position: absolute;
     top: 0;
     left: 0;
     width: var(--slider-width, 100%);
-    max-width: none !important;
     height: 100%;
+    max-width: none !important;
     object-fit: contain;
     object-position: center;
 }
@@ -291,7 +291,6 @@
     z-index: 5;
     pointer-events: none;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    transform: translateX(-50%);
 }
 
 .slider-handle-button {
@@ -313,7 +312,6 @@
     font-size: 0.9rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
-
         /* Карусели и стрелочки */
 
         .carousel-wrapper { position: relative; margin-bottom: 30px; }
@@ -1661,31 +1659,30 @@
         initMobileMenu();
     }
 
- document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.before-after-slider').forEach(slider => {
-            const range = slider.querySelector('.slider-range-input');
-            const wrapper = slider.querySelector('.img-before-wrapper');
-            const line = slider.querySelector('.slider-handle-line');
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.before-after-slider').forEach(slider => {
+        const range = slider.querySelector('.slider-range-input');
+        const wrapper = slider.querySelector('.img-before-wrapper');
+        const line = slider.querySelector('.slider-handle-line');
+        const innerImg = wrapper ? wrapper.querySelector('img') : null;
 
-            if (!range || !wrapper || !line) return;
+        if (!range || !wrapper || !line) return;
 
-            // Измеряем ширину контейнера и передаем картинке внутри шторки
-            const updateWidth = () => {
-                const w = slider.getBoundingClientRect().width;
-                slider.style.setProperty('--slider-width', `${w}px`);
-            };
+        const updateWidth = () => {
+            const w = slider.getBoundingClientRect().width;
+            slider.style.setProperty('--slider-width', `${w}px`);
+        };
 
-            updateWidth();
-            window.addEventListener('resize', updateWidth);
+        updateWidth();
+        window.addEventListener('resize', updateWidth);
 
-            // Двигаем шторку и линию в процентах
-            range.addEventListener('input', (e) => {
-                const val = e.target.value + '%';
-                wrapper.style.width = val;
-                line.style.left = val;
-            });
+        range.addEventListener('input', (e) => {
+            const val = e.target.value + '%';
+            wrapper.style.width = val;
+            line.style.left = val;
         });
     });
+});
 ymaps.ready(initMap);
   function initMap() {
       var myMap = new ymaps.Map("map", {
