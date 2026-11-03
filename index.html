@@ -252,6 +252,7 @@
 }
 
 /* Твои текущие общие стили (трогать не нужно, они идеальны для 2 и 3 слайдеров) */
+/* Твои базовые стили для плашек */
 .slider-label {
     position: absolute;
     bottom: 12px;
@@ -272,9 +273,13 @@
 .slider-label.after { right: 12px; top: auto; bottom: 12px; }
 .slider-label.before { left: 12px; top: auto; bottom: 12px; }
 
-/* ТОЧЕЧНОЕ СМЕЩЕНИЕ ТОЛЬКО ДЛЯ ДОМА КОТЛОВА: */
-#kotlov-slider .slider-label.before { left: 22px; }
-#kotlov-slider .slider-label.after { right: 22px; }
+/* ТОЧЕЧНОЕ СМЕЩЕНИЕ ДЛЯ ДОМА КОТЛОВА (с !important, чтобы перебить любые медиа-запросы) */
+#kotlov-slider .slider-label.before { 
+    left: 22px !important; 
+}
+#kotlov-slider .slider-label.after { 
+    right: 22px !important; 
+}
 
 .slider-range-input {
     position: absolute;
@@ -506,7 +511,7 @@
         grid-template-columns: 1fr !important;
     }
 }
-    .slider-label {
+  .slider-label {
         font-size: 0.65rem !important;
         padding: 4px 8px !important;
         bottom: 10px !important;
@@ -516,6 +521,14 @@
     }
     .slider-label.after {
         right: 8px !important;
+    }
+
+    /* Мобильный отступ специально для Дома Котлова */
+    #kotlov-slider .slider-label.before {
+        left: 16px !important;
+    }
+    #kotlov-slider .slider-label.after {
+        right: 16px !important;
     }
 }
     /* Адаптивный эпиграф */
