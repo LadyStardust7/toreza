@@ -14,11 +14,54 @@
         
         /* Сетка анкет */
         .ankety-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin: 35px 0; }
-        .ankety-card { background: #F4F4F2; padding: 12px; border-radius: 12px; border: 1px solid #EAEAEA; }
+        .ankety-card { background: #F4F4F2; padding: 12px; border-radius: 12px; border: 1px solid #EAEAEA; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; margin: 0; }
+        .ankety-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
         .ankety-card img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 8px; display: block; }
         .ankety-card figcaption { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #666; margin-top: 10px; text-align: center; font-weight: 600; }
 
         .back-link { font-family: 'Unbounded', sans-serif; font-size: 0.85rem; color: #E73121; text-decoration: none; font-weight: 700; display: inline-block; margin-bottom: 30px; text-transform: uppercase; }
+
+        /* Модальное окно для увеличенного просмотра */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .modal-close {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+            color: #ffffff;
+            font-size: 40px;
+            font-weight: 300;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: color 0.2s;
+        }
+        .modal-close:hover {
+            color: #E73121;
+        }
+
         @media (max-width: 600px) { .article-container { padding: 25px; } h1 { font-size: 1.4rem; } }
     </style>
 </head>
@@ -39,12 +82,53 @@
             <figure class="ankety-card"><img src="ankety5.jpg" alt="Анкета 5"><figcaption>Анкета №5</figcaption></figure>
             <figure class="ankety-card"><img src="ankety6.jpg" alt="Анкета 6"><figcaption>Анкета №6</figcaption></figure>
             <figure class="ankety-card"><img src="ankety7.jpg" alt="Анкета 7"><figcaption>Анкета №7</figcaption></figure>
-            <figure class="ankety-card"><img src="ankety8.jpg" alt="Анкета 8"><figcaption>Анкеты №8</figcaption></figure>
+            <figure class="ankety-card"><img src="ankety8.jpg" alt="Анкета 8"><figcaption>Анкета №8</figcaption></figure>
             <figure class="ankety-card"><img src="ankety9.jpg" alt="Анкета 9"><figcaption>Анкета №9</figcaption></figure>
         </div>
 
         <br>
         <a href="index.html#archive" class="back-link">← Вернуться на главную страницу</a>
     </div>
+
+    <!-- Модальное окно -->
+    <div class="modal" id="imageModal">
+        <span class="modal-close" id="modalClose">&times;</span>
+        <img class="modal-content" id="modalImage" src="" alt="Увеличенная анкета">
+    </div>
+
+    <script>
+        // Скрипт для увеличения анкет по клику
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalClose = document.getElementById('modalClose');
+        const cards = document.querySelectorAll('.ankety-card');
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                const img = card.querySelector('img');
+                modalImage.src = img.src;
+                modal.classList.add('active');
+            });
+        });
+
+        function closeModal() {
+            modal.classList.remove('active');
+            modalImage.src = '';
+        }
+
+        modalClose.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+        
+        // Закрытие по нажатию клавиши Esc
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
