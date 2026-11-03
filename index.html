@@ -196,27 +196,121 @@
 
         /* Слайдер сравнения */
 
-        .before-after-container { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 15px; margin-bottom: 30px; max-width: 650px; margin-left: auto; margin-right: auto; }
+       .before-after-container {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 30px;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-.before-after-slider { position: relative; width: 100%; max-width: 650px; margin: 0 auto; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 12px; user-select: none; background: #ffffff; }
+.before-after-slider {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 14px;
+    user-select: none;
+    background: #ffffff;
+}
 
-.slider-img.img-after { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 1; }
+.slider-img.img-after {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    z-index: 1;
+}
 
-        .img-before-wrapper { position: absolute; top: 0; left: 0; width: 50%; height: 100%; overflow: hidden; z-index: 3; background: #ffffff; }
+.img-before-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 3;
+    background: #ffffff;
+}
 
-        .img-before-wrapper img { position: absolute; top: 0; left: 0; width: var(--slider-width, 800px); max-width: none; height: 100%; object-fit: contain; object-position: center bottom; }
+.img-before-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
 
-        .slider-label { position: absolute; bottom: 16px; padding: 6px 14px; background: rgba(0, 0, 0, 0.85); color: #ffffff; font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700; border-radius: 20px; text-transform: uppercase; backdrop-filter: blur(4px); pointer-events: none; white-space: nowrap; }
+.slider-label {
+    position: absolute;
+    bottom: 16px;
+    padding: 6px 14px;
+    background: rgba(0, 0, 0, 0.85);
+    color: #ffffff;
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 20px;
+    text-transform: uppercase;
+    backdrop-filter: blur(4px);
+    pointer-events: none;
+    white-space: nowrap;
+}
 
-        .slider-label.after { right: 16px; z-index: 2; }
+.slider-label.after { right: 16px; z-index: 2; }
+.slider-label.before { left: 16px; z-index: 4; }
 
-        .slider-label.before { left: 16px; z-index: 4; }
+.slider-range-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 10;
+    cursor: ew-resize;
+}
 
-        .slider-range-input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; z-index: 10; cursor: ew-resize; }
+.slider-handle-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 4px;
+    background: #ffffff;
+    z-index: 5;
+    pointer-events: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
 
-        .slider-handle-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: #ffffff; z-index: 5; pointer-events: none; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); }
-
-        .slider-handle-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; background: var(--accent-vermilion); color: #ffffff; border: 3px solid #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-weight: 800; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); }
+.slider-handle-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    background: var(--accent-vermilion);
+    color: #ffffff;
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
 
 
 
@@ -776,16 +870,31 @@
     </div>
     <p style="margin-bottom: 20px; color: #555555;">Потяните ползунок в центре вправо или влево, чтобы сравнить исторический облик особняка с его современным состоянием:</p>
 
+  <section id="lessner-comparison">
+    <div class="section-title-wrap">
+        <span class="section-num">04</span>
+        <h2 class="section-title">Век спустя</h2>
+    </div>
+    <p style="margin-bottom: 20px; color: #555555;">Потяните ползунок в центре вправо или влево, чтобы сравнить исторический облик особняка с его современным состоянием:</p>
+
+   <section id="lessner-comparison">
+    <div class="section-title-wrap">
+        <span class="section-num">04</span>
+        <h2 class="section-title">Век спустя</h2>
+    </div>
+    <p style="margin-bottom: 20px; color: #555555;">Потяните ползунок в центре вправо или влево, чтобы сравнить исторический облик с его современным состоянием:</p>
+
+    <!-- Слайдер 1: Дом Котлова (пропорция ~3:2) -->
     <div class="before-after-container">
-        <div class="before-after-slider" id="lessnerSlider">
+        <div class="before-after-slider" style="aspect-ratio: 3 / 2;">
             <img src="lessner-after.jpg" alt="Дом Котлова современное фото" class="slider-img img-after">
             <span class="slider-label after">Наши дни</span>
-            <div class="img-before-wrapper" id="beforeWrapper">
-                <img src="lessner-before.jpg" alt="Дом Котлова историческое фото" class="slider-img img-before" id="imgBefore">
+            <div class="img-before-wrapper">
+                <img src="lessner-before.jpg" alt="Дом Котлова историческое фото" class="slider-img img-before">
                 <span class="slider-label before">Архив</span>
             </div>
-            <input type="range" min="0" max="100" value="50" class="slider-range-input" id="sliderRange" aria-label="Сравнить фотографии">
-            <div class="slider-handle-line" id="sliderLine">
+            <input type="range" min="0" max="100" value="50" class="slider-range-input" aria-label="Сравнить фотографии">
+            <div class="slider-handle-line">
                 <div class="slider-handle-button">↔</div>
             </div>
         </div>
@@ -793,21 +902,42 @@
             Дом Котлова
         </div>
     </div>
+
+    <!-- Слайдер 2: Гостиница «Спутник» (пропорция ~4:3) -->
     <div class="before-after-container">
-        <div class="before-after-slider" id="sputnikSlider">
+        <div class="before-after-slider" style="aspect-ratio: 4 / 3;">
             <img src="sputnik2.jpg" alt="Гостиница Спутник современное фото" class="slider-img img-after">
             <span class="slider-label after">Наши дни</span>
-            <div class="img-before-wrapper" id="beforeWrapperSputnik">
-                <img src="sputnik1.jpg" alt="Гостиница Спутник историческое фото" class="slider-img img-before" id="imgBeforeSputnik">
+            <div class="img-before-wrapper">
+                <img src="sputnik1.jpg" alt="Гостиница Спутник историческое фото" class="slider-img img-before">
                 <span class="slider-label before">Архив</span>
             </div>
-            <input type="range" min="0" max="100" value="50" class="slider-range-input" id="sliderRangeSputnik" aria-label="Сравнить фотографии">
-            <div class="slider-handle-line" id="sliderLineSputnik">
+            <input type="range" min="0" max="100" value="50" class="slider-range-input" aria-label="Сравнить фотографии">
+            <div class="slider-handle-line">
                 <div class="slider-handle-button">↔</div>
             </div>
         </div>
         <div style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #666; margin-top: 10px; text-align: center; font-weight: 500;">
             Гостиница «Спутник» (пр. Тореза, 36)
+        </div>
+    </div>
+
+    <!-- Слайдер 3: Двор дома № 32 (вертикальная пропорция ~3:4) -->
+    <div class="before-after-container">
+        <div class="before-after-slider" style="aspect-ratio: 3 / 4; max-width: 500px;">
+            <img src="Время в объективе_Двор дома № 32 по пр. Тореза (быв. Смтаро-Парголовский_Кравченко Галина Всеволодовна.jpg" alt="Двор дома №32 современное фото" class="slider-img img-after">
+            <span class="slider-label after">Наши дни</span>
+            <div class="img-before-wrapper">
+                <img src="Время в объективе_Галя Гагарина в своем саду. 1930-е гг._Кравченко Галина Всеволодовна.jpg" alt="Двор дома №32 историческое фото" class="slider-img img-before">
+                <span class="slider-label before">Архив</span>
+            </div>
+            <input type="range" min="0" max="100" value="50" class="slider-range-input" aria-label="Сравнить фотографии">
+            <div class="slider-handle-line">
+                <div class="slider-handle-button">↔</div>
+            </div>
+        </div>
+        <div style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #666; margin-top: 10px; text-align: center; font-weight: 500;">
+            Двор дома №&nbsp;32 по&nbsp;пр. Тореза
         </div>
     </div>
 </section>
