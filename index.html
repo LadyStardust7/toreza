@@ -313,11 +313,6 @@
     font-size: 0.9rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
-        .kotlov-slider img.img-after {
-    position: relative !important;
-    height: auto !important;
-    max-height: 500px;
-}
         /* Карусели и стрелочки */
 
         .carousel-wrapper { position: relative; margin-bottom: 30px; }
@@ -888,17 +883,17 @@
     </div>
     <p style="margin-bottom: 20px; color: #555555;">Потяните ползунок в центре вправо или влево, чтобы сравнить исторический облик с его современным состоянием:</p>
 
-   <!-- Слайдер 1: Дом Котлова -->
+ <!-- Слайдер 1: Дом Котлова -->
     <div class="before-after-container">
-        <div class="before-after-slider kotlov-slider">
-            <img src="lessner-after.jpg" alt="Дом Котлова современное фото" class="slider-img img-after" style="position: relative; height: auto; display: block;">
+        <div class="before-after-slider" style="aspect-ratio: 4 / 3;">
+            <img src="lessner-after.jpg" alt="Дом Котлова современное фото" class="slider-img img-after">
             <span class="slider-label after">Наши дни</span>
-            <div class="img-before-wrapper">
-                <img src="lessner-before.jpg" alt="Дом Котлова историческое фото" class="slider-img img-before" style="position: absolute; top: 0; left: 0; height: 100%;">
+            <div class="img-before-wrapper" style="width: 50%;">
+                <img src="lessner-before.jpg" alt="Дом Котлова историческое фото" class="slider-img img-before">
                 <span class="slider-label before">Архив</span>
             </div>
             <input type="range" min="0" max="100" value="50" class="slider-range-input" aria-label="Сравнить фотографии">
-            <div class="slider-handle-line">
+            <div class="slider-handle-line" style="left: 50%;">
                 <div class="slider-handle-button">↔</div>
             </div>
         </div>
