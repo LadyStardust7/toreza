@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Unbounded:wght@600;800;900&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Merriweather', serif; background-color: #F9F8F6; color: #222222; line-height: 1.8; margin: 0; padding: 40px 20px; }
-        .article-container { max-width: 900px; margin: 0 auto; background: #ffffff; padding: 50px; border-radius: 20px; box-shadow: 0 4px 25px rgba(0,0,0,0.05); border: 1px solid #EAEAEA; }
+        .article-container { max-width: 1000px; margin: 0 auto; background: #ffffff; padding: 50px; border-radius: 20px; box-shadow: 0 4px 25px rgba(0,0,0,0.05); border: 1px solid #EAEAEA; }
         h1 { font-family: 'Unbounded', sans-serif; font-size: 1.8rem; color: #111111; margin-bottom: 10px; line-height: 1.25; text-transform: uppercase; }
         .author-badge { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 700; color: #E73121; margin-bottom: 25px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
         p { font-size: 1.05rem; margin-bottom: 24px; color: #333333; }
@@ -21,7 +21,7 @@
 
         .back-link { font-family: 'Unbounded', sans-serif; font-size: 0.85rem; color: #E73121; text-decoration: none; font-weight: 700; display: inline-block; margin-bottom: 30px; text-transform: uppercase; }
 
-        /* Модальное окно для увеличенного просмотра */
+        /* Модальное окно с 3D-перспективой для переворота */
         .modal {
             display: none;
             position: fixed;
@@ -40,29 +40,161 @@
         .modal.active {
             display: flex;
         }
-        .modal-content {
-            max-width: 90vw;
-            max-height: 90vh;
-            object-fit: contain;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
-        .modal-close {
-            position: absolute;
-            top: 25px;
-            right: 30px;
-            color: #ffffff;
-            font-size: 40px;
-            font-weight: 300;
-            cursor: pointer;
-            font-family: 'Inter', sans-serif;
-            transition: color 0.2s;
-        }
-        .modal-close:hover {
-            color: #E73121;
+
+        /* Контейнер карточки в модалке */
+        .modal-flip-container {
+            width: 100%;
+            max-width: 600px;
+            height: 85vh;
+            perspective: 1200px;
+            position: relative;
         }
 
-        @media (max-width: 600px) { .article-container { padding: 25px; } h1 { font-size: 1.4rem; } }
+        .modal-flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .modal-flip-container.flipped .modal-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .modal-front, .modal-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            background: #ffffff;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.4);
+            box-sizing: border-box;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #111;
+        }
+
+        .modal-back {
+            transform: rotateY(180deg);
+            padding: 40px 30px 30px 30px;
+            background: #ffffff;
+            color: #222;
+            overflow-y: auto; /* Внутренний скролл для длинных текстов */
+        }
+
+        .modal-back h3 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.05rem;
+            color: #E73121;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .modal-back .transcript-body {
+            font-family: 'Merriweather', serif;
+            font-size: 0.95rem; /* Идеальный размер шрифта для ПК */
+            line-height: 1.7;
+            color: #333;
+        }
+
+        .modal-back .transcript-body p {
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        .modal-back .transcript-body strong {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: #111;
+            display: block;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        /* Кнопка переворота (стрелочки) */
+        .flip-btn {
+            position: absolute;
+            top: 20px;
+            right: 80px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: transform 0.3s, background 0.2s;
+            z-index: 10;
+        }
+        .flip-btn:hover {
+            background: #ffffff;
+            transform: scale(1.08);
+        }
+        .flip-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: #222;
+            transition: transform 0.6s;
+        }
+        .modal-flip-container.flipped .flip-btn svg {
+            transform: rotate(180deg);
+        }
+
+        /* Кнопка закрытия (крестик) */
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            color: #222;
+            font-size: 28px;
+            font-weight: 300;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 10;
+            transition: background 0.2s, transform 0.2s;
+            font-family: 'Inter', sans-serif;
+            line-height: 1;
+        }
+        .modal-close:hover {
+            background: #ffffff;
+            transform: scale(1.08);
+        }
+
+        @media (max-width: 600px) { 
+            .article-container { padding: 25px; } 
+            h1 { font-size: 1.4rem; } 
+            .modal-flip-container { height: 80vh; }
+            .modal-back { padding: 30px 20px 20px 20px; }
+            /* Адаптивный размер шрифта для мобильных */
+            .modal-back .transcript-body, 
+            .modal-back .transcript-body p { font-size: 0.85rem; line-height: 1.6; }
+            .modal-back .transcript-body strong { font-size: 0.78rem; }
+            .flip-btn { right: 70px; width: 38px; height: 38px; }
+            .modal-close { width: 38px; height: 38px; font-size: 24px; }
+        }
     </style>
 </head>
 <body>
@@ -72,47 +204,122 @@
         <span class="author-badge">Социологический срез • Народный архив</span>
         <h1>Анкеты жителей</h1>
         
-        <p>Подборка заполненных анкет с мнениями, воспоминаниями и отзывами жителей и читателей о проспекте Тореза.</p>
+        <p>Подборка заполненных анкет с мнениями, воспоминаниями и отзывами жителей о проспекте Тореза. Нажмите на любую анкету, чтобы увеличить её, а затем воспользуйтесь кнопкой переворота для чтения расшифровки.</p>
         
         <div class="ankety-grid">
-            <figure class="ankety-card"><img src="ankety1.jpg" alt="Анкета 1"><figcaption>Анкета №1</figcaption></figure>
-            <figure class="ankety-card"><img src="ankety2.jpg" alt="Анкета 2"><figcaption>Анкета №2</figcaption></figure>
-            <figure class="ankety-card"><img src="ankety3.jpg" alt="Анкета 3"><figcaption>Анкета №3</figcaption></figure>
-            <figure class="ankety-card"><img src="ankety4.jpg" alt="Анкета 4"><figcaption>Анкета №4</figcaption></figure>
-            <figure class="ankety-card"><img src="ankety5.jpg" alt="Анкета 5"><figcaption>Анкета №5</figcaption></figure>
-            <figure class="ankety-card"><img src="ankety6.jpg" alt="Анкета 6"><figcaption>Анкета №6</figcaption></figure>
-            <figure class="ankety-card"><img src="ankety7.jpg" alt="Анкета 7"><figcaption>Анкета №7</figcaption></figure>
-            <figure class="ankety-card"><img src="ankety8.jpg" alt="Анкета 8"><figcaption>Анкета №8</figcaption></figure>
-            <figure class="ankety-card"><img src="ankety9.jpg" alt="Анкета 9"><figcaption>Анкета №9</figcaption></figure>
+            <figure class="ankety-card" data-anketa="1"><img src="ankety1.jpg" alt="Анкета 1"><figcaption>Анкета №1</figcaption></figure>
+            <figure class="ankety-card" data-anketa="2"><img src="ankety2.jpg" alt="Анкета 2"><figcaption>Анкета №2</figcaption></figure>
+            <figure class="ankety-card" data-anketa="3"><img src="ankety3.jpg" alt="Анкета 3"><figcaption>Анкета №3</figcaption></figure>
+            <figure class="ankety-card" data-anketa="4"><img src="ankety4.jpg" alt="Анкета 4"><figcaption>Анкета №4</figcaption></figure>
+            <figure class="ankety-card" data-anketa="5"><img src="ankety5.jpg" alt="Анкета 5"><figcaption>Анкета №5</figcaption></figure>
+            <figure class="ankety-card" data-anketa="6"><img src="ankety6.jpg" alt="Анкета 6"><figcaption>Анкета №6</figcaption></figure>
+            <figure class="ankety-card" data-anketa="7"><img src="ankety7.jpg" alt="Анкета 7"><figcaption>Анкета №7</figcaption></figure>
+            <figure class="ankety-card" data-anketa="8"><img src="ankety8.jpg" alt="Анкета 8"><figcaption>Анкета №8</figcaption></figure>
+            <figure class="ankety-card" data-anketa="9"><img src="ankety9.jpg" alt="Анкета 9"><figcaption>Анкета №9</figcaption></figure>
         </div>
 
         <br>
         <a href="index.html#archive" class="back-link">← Вернуться на главную страницу</a>
     </div>
 
-    <!-- Модальное окно -->
+    <!-- Модальное окно с переворотом -->
     <div class="modal" id="imageModal">
-        <span class="modal-close" id="modalClose">&times;</span>
-        <img class="modal-content" id="modalImage" src="" alt="Увеличенная анкета">
+        <button class="flip-btn" id="flipCardBtn" title="Перевернуть / Показать расшифровку">
+            <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+        </button>
+        <button class="modal-close" id="modalClose">&times;</button>
+
+        <div class="modal-flip-container" id="modalFlipContainer">
+            <div class="modal-flip-inner">
+                <!-- Лицевая сторона: крупная картинка -->
+                <div class="modal-front">
+                    <img id="modalImage" src="" alt="Увеличенная анкета">
+                </div>
+                <!-- Обратная сторона: расшифровка текста -->
+                <div class="modal-back">
+                    <h3 id="modalTitle">Расшифровка текста</h3>
+                    <div class="transcript-body" id="modalText">
+                        <!-- Текст подставится через JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Скрипт для увеличения анкет по клику
+        // База расшифровок строго по номерам анкет
+        const transcripts = {
+            "1": {
+                title: "Расшифровка • Анкета №1",
+                text: "<p><strong>Как давно Вы являетесь читателем нашей библиотеки?</strong><br>Недавно.</p><p><strong>Что Вы знаете о нашем районе?</strong><br>Выборгский район один из самых зелёных районов Санкт-Петербурга. Лично мне очень нравится гулять по Серебряному пруду, смотреть, как меняется пруд и картины вокруг него в зависимости от сезона и погоды.</p><p><strong>Как Ваша жизнь связана с проспектом Тореза?</strong><br>Ежедневно хожу по нему на остановку, чтобы добраться до университета. Каждый раз радует большое количество высоких и пышных деревьев. Хорошо продумана велосипедная дорожка.</p><p><strong>Какие яркие воспоминания или факты, связанные с этим местом Вы можете рассказать:</strong><br>Во время прогулки с сестрой и её собакой Микки мы познакомились с замечательной девушкой Леной, которая живёт со мной в одном доме. Теперь мы часто выходим погулять с Леной и её щенком Флоки.</p>"
+            },
+            "2": {
+                title: "Расшифровка • Анкета №2",
+                text: "<p><strong>Как давно Вы являетесь читателем нашей библиотеки?</strong><br>с 2021 г.</p><p><strong>Что Вы знаете о нашем районе?</strong><br>Это бывший рабочий район, но с конца 60-х годов 20 века его стали называть элитным районом, так как очень зелёный, район профессуры, Политеха. Сейчас в Выборгском районе в ДК постоянно проходят концерты и спектакли.</p><p><strong>Как Ваша жизнь связана с проспектом Тореза?</strong><br>Я переехала на пр. Тореза в 2008 году, поближе к внукам. За эти годы они выросли и закончили университеты (старшие). Мне нравится район, но тут в 2022 году умер муж, все напоминает о нем.</p><p><strong>Какие яркие воспоминания или факты, связанные с этим местом:</strong><br>Парк Сосновка, где мы с внуками гуляли, катались на лошадях. На прудах кормили уток: это прекрасный район и очень спокойный и тихий.</p>"
+            },
+            "3": {
+                title: "Расшифровка • Анкета №3",
+                text: "<p><strong>Как давно Вы являетесь читателем нашей библиотеки?</strong><br>С 1994 – года переезда в этот регион, ул. Жака Дюкло.</p><p><strong>Что Вы знаете о нашем районе?</strong><br>Много чего, так как читаю краеведческую литературу, сайты, блоги, живые беседы жителей этого места, родившихся здесь и проживающих здесь до сих пор.</p><p><strong>Как Ваша жизнь связана с проспектом Тореза?</strong><br>В основном эмоционально: прогулки, позитивная ментальность соседей, доброжелательное общение между собой, обмен информацией, зелёные зоны, сама атмосфера, ритм повседневной жизни. И конечно – любимая библиотека имени Дм. Лихачева – скорее бы закончился её ремонт, ждем.</p><p><strong>Какие яркие воспоминания или факты, связанные с этим местом:</strong><br>Сразу не вспомнить, их много.<br>1) наряжали в Сосновке ёлочку, вешали украшения, открытки с добрыми пожеланиями<br>2) лепили статую Снежной Эльзы, переживали, что быстро растает<br>3) праздники общероссийские, районные, городские тоже в Сосновке<br>4) открытие зоны отдыха на Серебряном пруду благодаря Коле Рыбакову и его команде – роскошно!!!<br>5) праздники, музыкальные вечера, юбилеи в бытность работы в Светлановском МО Татьяны Захаренковой!!!<br>6) открытие стрельбища европейского уровня в Сосновке, спортивные марафоны<br>7) чемпионаты России, соревнования по судомодельному спорту на Ольгинском пруду – удобной акватории для любителей и наблюдателей</p>"
+            },
+            "4": {
+                title: "Расшифровка • Анкета №4",
+                text: "<p><strong>Как давно Вы являетесь читателем нашей библиотеки?</strong><br>С детства.</p><p><strong>Что Вы знаете о нашем районе?</strong><br>Петербургский Кембридж. Самый зелёный район Петербурга в окружении ВУЗов: Политех, СПбГЛТУ, Торгово-экономический, Военная академия связи</p><p><strong>Как Ваша жизнь связана с проспектом Тореза?</strong><br>Приехала из роддома домой. Дом построен для профсоюза геологов. Провела детство на пр. Тореза, тонула в Серебряном пруду и училась кататься на коньках на нем же. Все детство гуляла в Сосновке. Поступила в СПбХУ им. Рериха и СПбГЛТА в нашем районе.</p><p><strong>Какие яркие воспоминания или факты, связанные с этим местом:</strong><br>Гостинца «Спутник» раньше называлась «Интурист». Раньше проспект носил название: проспект Мориса Тореза. Магазин у метро «Площадь Мужества» в народе называли «Пентагон».</p>"
+            },
+            "5": {
+                title: "Расшифровка • Анкета №5",
+                text: "<p><strong>Как давно Вы являетесь читателем нашей библиотеки?</strong><br>8 лет.</p><p><strong>Что Вы знаете о нашем районе?</strong><br>Историческое название – Лесной<br>Музей на Болотной<br>Парк ЛТУ<br>Сосновка<br>Поклонная гора</p><p><strong>Как Ваша жизнь связана с проспектом Тореза?</strong><br>Живу с 1992 года, район нравится</p><p><strong>Какие яркие воспоминания или факты, связанные с этим местом Вы можете рассказать:</strong><br>Любимое место - Сосновка</p>"
+            },
+            "6": {
+                title: "Расшифровка • Анкета №6",
+                text: "<p><strong>Как давно Вы являетесь читателем нашей библиотеки?</strong><br>6 лет.</p><p><strong>Что Вы знаете о нашем районе?</strong><br>— историю<br>— развитие промышленных предприятий<br>— этапы застройки в 1950-1970-х гг.<br>— самый зелёный район, большой по площади</p><p><strong>Как Ваша жизнь связана с проспектом Тореза?</strong><br>Транспортная магистраль всегда была одной из лучших в Санкт-Петербурге, поэтому удобно часто использовать для поездок в другой район Санкт-Петербурга</p><p><strong>Какие яркие воспоминания или факты, связанные с этим местом:</strong><br>— Посещение озер в Озерках, катание на санках в детстве<br>— Спорт в Сосновке<br>— Спортивные мероприятия<br>— Концерты и спектакли в ДК Выборгский</p>"
+            },
+            "7": {
+                title: "Расшифровка • Анкета №7",
+                text: "<p><strong>Как давно Вы являетесь читателем нашей библиотеки?</strong><br>15 лет.</p><p><strong>Что Вы знаете о нашем районе?</strong><br>Один из самых зелёных: озёра, парк Сосновка, чистый воздух. Поклонная гора – самое высокое место для наблюдений радуги, закатов и рассветов, видна вышка парка 300-летия с флагами.</p><p><strong>Как Ваша жизнь связана с проспектом Тореза?</strong><br>Место работы</p><p><strong>Какие яркие воспоминания или факты, связанные с этим местом Вы можете рассказать:</strong><br>Место жизни Д. С. Лихачева, место дуэли М. Ю. Лермонтова, памятники в Сосновке, мемориал военным лётчикам. Огорчение – разрушение «Светланы».</p>"
+            },
+            "8": {
+                title: "Расшифровка • Анкета №8",
+                text: "<p><strong>Как давно Вы являетесь читателем нашей библиотеки?</strong><br>С 2020 года.</p><p><strong>Что Вы знаете о нашем районе?</strong><br>Практически все, интересуюсь и собираю факты о нем.</p><p><strong>Как Ваша жизнь связана с проспектом Тореза?</strong><br>С 1967 г. – жительница Лесного</p><p><strong>Какие яркие воспоминания или факты, связанные с этим местом Вы можете рассказать:</strong><br>Раньше проспект был весь в акации, не широкий, без такого, как сейчас потока машин и домов-многоэтажек, настоящая дачная местность с уютными двориками и палисадниками</p>"
+            },
+            "9": {
+                title: "Расшифровка • Анкета №9",
+                text: "<p><strong>Как давно Вы являетесь читателем нашей библиотеки?</strong><br>Лет 10-15.</p><p><strong>Что Вы знаете о нашем районе?</strong><br>Что он очень зелёный, много важных исторических событий случилось здесь, научно-технический прогресс России: обучение (Вузы) лучшее в Санкт-Петербурге – тоже здесь</p><p><strong>Как Ваша жизнь связана с проспектом Тореза?</strong><br>Работа, детство в парках</p><p><strong>Какие яркие воспоминания или факты, связанные с этим местом Вы можете рассказать:</strong><br>Походы за грибами в детстве и во взрослой жизни в парк Сосновка. Велопрогулки по паркам и скверам, соседствующим с пр. Тореза.</p>"
+            }
+        };
+
         const modal = document.getElementById('imageModal');
         const modalImage = document.getElementById('modalImage');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalText = document.getElementById('modalText');
         const modalClose = document.getElementById('modalClose');
+        const flipBtn = document.getElementById('flipCardBtn');
+        const flipContainer = document.getElementById('modalFlipContainer');
         const cards = document.querySelectorAll('.ankety-card');
 
         cards.forEach(card => {
             card.addEventListener('click', () => {
                 const img = card.querySelector('img');
+                const anketaNum = card.getAttribute('data-anketa');
+                
                 modalImage.src = img.src;
+                
+                if (transcripts[anketaNum]) {
+                    modalTitle.innerText = transcripts[anketaNum].title;
+                    modalText.innerHTML = transcripts[anketaNum].text;
+                }
+
+                flipContainer.classList.remove('flipped');
                 modal.classList.add('active');
             });
         });
 
+        flipBtn.addEventListener('click', () => {
+            flipContainer.classList.toggle('flipped');
+        });
+
         function closeModal() {
             modal.classList.remove('active');
+            flipContainer.classList.remove('flipped');
             modalImage.src = '';
         }
 
@@ -122,8 +329,7 @@
                 closeModal();
             }
         });
-        
-        // Закрытие по нажатию клавиши Esc
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeModal();
