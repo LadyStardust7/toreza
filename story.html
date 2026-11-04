@@ -16,7 +16,51 @@
         .story-scans img { width: 100%; height: auto; border-radius: 8px; display: block; }
         .story-scans figcaption { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #666; margin-top: 10px; text-align: center; font-weight: 500; }
         .back-link { font-family: 'Unbounded', sans-serif; font-size: 0.85rem; color: #E73121; text-decoration: none; font-weight: 700; display: inline-block; margin-bottom: 30px; text-transform: uppercase; }
-        @media (max-width: 600px) { .article-container { padding: 25px; } h1 { font-size: 1.4rem; } }
+
+        /* Стили модального окна для телефонов */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            max-width: 95vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: #ffffff;
+            font-size: 40px;
+            font-weight: 300;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+
+        @media (max-width: 600px) { 
+            .article-container { padding: 25px; } 
+            h1 { font-size: 1.4rem; } 
+            /* На мобильных делаем картинки кликабельными с подсказкой курсора */
+            .story-scans figure { cursor: pointer; transition: transform 0.2s; }
+            .story-scans figure:active { transform: scale(0.98); }
+        }
     </style>
 </head>
 <body>
@@ -29,18 +73,54 @@
         <p>Ниже представлены рукописные страницы воспоминаний и краеведческих заметок, переданные в архив библиотеки.</p>
         
         <div class="story-scans">
-            <figure>
+            <figure class="zoomable-card">
                 <img src="story-page1.jpg" alt="Рукописные заметки, страница 1">
-                <figcaption>Страница 1</figcaption>
+                <figcaption>Страница 1 (нажмите для увеличения)</figcaption>
             </figure>
-            <figure>
+            <figure class="zoomable-card">
                 <img src="story-page2.jpg" alt="Рукописные заметки, страница 2">
-                <figcaption>Страница 2</figcaption>
+                <figcaption>Страница 2 (нажмите для увеличения)</figcaption>
             </figure>
         </div>
 
         <br>
         <a href="index.html#archive" class="back-link">← Вернуться на главную страницу</a>
     </div>
+
+    <!-- Модальное окно для мобильных -->
+    <div class="modal" id="imageModal">
+        <span class="modal-close" id="modalClose">&times;</span>
+        <img class="modal-content" id="modalImage" src="" alt="Увеличенная страница">
+    </div>
+
+    <script>
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalClose = document.getElementById('modalClose');
+        const cards = document.querySelectorAll('.zoomable-card');
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Срабатывает только на мобильных устройствах (ширина экрана <= 600px)
+                if (window.innerWidth <= 600) {
+                    const img = card.querySelector('img');
+                    modalImage.src = img.src;
+                    modal.classList.add('active');
+                }
+            });
+        });
+
+        function closeModal() {
+            modal.classList.remove('active');
+            modalImage.src = '';
+        }
+
+        modalClose.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
