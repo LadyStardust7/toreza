@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Цифровая прогулка: Проспект Тореза</title>
-    
+    <script>
+        if (window.location.pathname.includes('index.html')) {
+            const cleanPath = window.location.pathname.replace('index.html', '');
+            window.history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
+        }
+    </script>
     <!-- Подключение API Яндекс Карт -->
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     </script>
