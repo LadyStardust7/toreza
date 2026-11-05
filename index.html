@@ -1725,17 +1725,18 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 ymaps.ready(initMap);
 function initMap() {
-         var myMap = new ymaps.Map("map", {
-          center: [60.0135, 30.3450], // Сместили центр чуть выше, в сердце маршрута
-          zoom: 13,
-          controls: ['zoomControl']
-      }, {
-          // ИСПРАВЛЕНО: Широкие границы, куда точно входят все 11 точек и Сосновка
-          restrictMapArea: [
-              [59.9900, 30.3100], // Левый нижний угол (Юго-Запад): район м. Лесная / пр. Энгельса
-              [60.0380, 30.3800]  // Правый верхний угол (Северо-Восток): выше м. Озерки / за Гражданский пр.
-          ]
-      });
+    var myMap = new ymaps.Map("map", {
+        // Оптимальный центр, чтобы сразу увидеть всю прогулку
+        center: [60.0135, 30.3480],
+        zoom: 13,
+        controls: ['zoomControl']
+    }, {
+        // Жестко ограничиваем карту выбранным вами квадратом улиц
+        restrictMapArea: [
+            [59.9920, 30.3200], // Левый нижний угол: Энгельса / Новороссийская (с небольшим отступом вниз-влево)
+            [60.0380, 30.3750]  // Правый верхний угол: Северный / Тихорецкий (с небольшим отступом вверх-вправо)
+        ]
+    });
 
     // 11 точек маршрута
     var markPoint1 = new ymaps.Placemark([59.998315, 30.363856], {
@@ -1768,7 +1769,7 @@ function initMap() {
         balloonContentBody: 'пр. Тореза, 38. Общество попечения о бедных.'
     }, { preset: 'islands#redIcon' });
 
-    var markPoint7 = new ymaps.Placemark([60.01155, 30.347520], {
+    var markPoint7 = new ymaps.Placemark([60.011550, 30.347520], {
         balloonContentHeader: '<b>Место дуэли Лермонтова</b>',
         balloonContentBody: 'Парк Сосновка. Место дуэли с Э. де Барантом.'
     }, { preset: 'islands#redIcon' });
