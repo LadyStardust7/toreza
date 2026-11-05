@@ -1724,84 +1724,89 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 ymaps.ready(initMap);
-  function initMap() {
-      var myMap = new ymaps.Map("map", {
-          center: [60.0050, 30.3350],
-          zoom: 13,
-          controls: ['zoomControl']
-      });
+function initMap() {
+    var myMap = new ymaps.Map("map", {
+        center: [60.0140, 30.3420], // Оптимальный центр для вашей зоны (между Сосновкой и пр. Тореза)
+        zoom: 13,
+        controls: ['zoomControl']
+    }, {
+        // Жестко ограничиваем область перемещения и зума карты
+        restrictMapArea: [
+            [59.9920, 30.3050], // Левый нижний угол (Юго-Запад): район м. Удельная / пр. Энгельса
+            [60.0360, 30.3800]  // Правый верхний угол (Северо-Восток): выше Поклонной горы / за Тихорецкий пр.
+        ]
+    });
 
-      // 11 точек маршрута
-      var markPoint1 = new ymaps.Placemark([59.998315, 30.363856], {
-          balloonContentHeader: '<b>Площадь Мужества</b>',
-          balloonContentBody: 'Начало маршрута, исторический перекресток.'
-      }, { preset: 'islands#redIcon' });
+    // 11 точек маршрута
+    var markPoint1 = new ymaps.Placemark([59.998315, 30.363856], {
+        balloonContentHeader: '<b>Площадь Мужества</b>',
+        balloonContentBody: 'Начало маршрута, исторический перекресток.'
+    }, { preset: 'islands#redIcon' });
 
-      var markPoint2 = new ymaps.Placemark([60.000029, 30.362077], {
-          balloonContentHeader: '<b>Дом Котлова (Дом Шаляпина)</b>',
-          balloonContentBody: 'пр. Тореза, 8. Особняк в стиле модерн-замка.'
-      }, { preset: 'islands#redIcon' });
+    var markPoint2 = new ymaps.Placemark([60.000029, 30.362077], {
+        balloonContentHeader: '<b>Дом Котлова (Дом Шаляпина)</b>',
+        balloonContentBody: 'пр. Тореза, 8. Особняк в стиле модерн-замка.'
+    }, { preset: 'islands#redIcon' });
 
-      // Новая точка 03: Библиотека им. Д.С. Лихачева
-      var markPoint3 = new ymaps.Placemark([60.004415, 30.356122], {
-          balloonContentHeader: '<b>Библиотека им. Д. С. Лихачева</b>',
-          balloonContentBody: 'пр. Тореза, 32. Главный краеведческий и культурный центр проспекта.'
-      }, { preset: 'islands#redIcon' });
+    var markPoint3 = new ymaps.Placemark([60.004415, 30.356122], {
+        balloonContentHeader: '<b>Библиотека им. Д. С. Лихачева</b>',
+        balloonContentBody: 'пр. Тореза, 32. Главный краеведческий и культурный центр проспекта.'
+    }, { preset: 'islands#redIcon' });
 
-      var markPoint4 = new ymaps.Placemark([60.005068, 30.357541], {
-          balloonContentHeader: '<b>Дом Н. Н. Кайгородова</b>',
-          balloonContentBody: 'пр. Тореза, 29. Дом коменданта.'
-      }, { preset: 'islands#redIcon' });
+    var markPoint4 = new ymaps.Placemark([60.005068, 30.357541], {
+        balloonContentHeader: '<b>Дом Н. Н. Кайгородова</b>',
+        balloonContentBody: 'пр. Тореза, 29. Дом коменданта.'
+    }, { preset: 'islands#redIcon' });
 
-      var markPoint5 = new ymaps.Placemark([60.005392, 30.354253], {
-          balloonContentHeader: '<b>Гостиница «Спутник»</b>',
-          balloonContentBody: 'пр. Тореза, 36. Культовый советский проект арх. В. Белова.'
-      }, { preset: 'islands#redIcon' });
+    var markPoint5 = new ymaps.Placemark([60.005392, 30.354253], {
+        balloonContentHeader: '<b>Гостиница «Спутник»</b>',
+        balloonContentBody: 'пр. Тореза, 36. Культовый советский проект арх. В. Белова.'
+    }, { preset: 'islands#redIcon' });
 
-      var markPoint6 = new ymaps.Placemark([60.006314, 30.353004], {
-          balloonContentHeader: '<b>Приют «Лепта»</b>',
-          balloonContentBody: 'пр. Тореза, 38. Общество попечения о бедных.'
-      }, { preset: 'islands#redIcon' });
+    var markPoint6 = new ymaps.Placemark([60.006314, 30.353004], {
+        balloonContentHeader: '<b>Приют «Лепта»</b>',
+        balloonContentBody: 'пр. Тореза, 38. Общество попечения о бедных.'
+    }, { preset: 'islands#redIcon' });
 
-      var markPoint7 = new ymaps.Placemark([60.01155, 30.347520], {
-          balloonContentHeader: '<b>Место дуэли Лермонтова</b>',
-          balloonContentBody: 'Парк Сосновка. Место дуэли с Э. де Барантом.'
-      }, { preset: 'islands#redIcon' });
+    var markPoint7 = new ymaps.Placemark([60.01155, 30.347520], {
+        balloonContentHeader: '<b>Место дуэли Лермонтова</b>',
+        balloonContentBody: 'Парк Сосновка. Место дуэли с Э. де Барантом.'
+    }, { preset: 'islands#redIcon' });
 
-      var markPoint8 = new ymaps.Placemark([60.024539, 30.332865], {
-          balloonContentHeader: '<b>Легендарный мототрек</b>',
-          balloonContentBody: 'Парк Сосновка. Эпицентр гонок и спортивных эмоций.'
-      }, { preset: 'islands#redIcon' });
+    var markPoint8 = new ymaps.Placemark([60.024539, 30.332865], {
+        balloonContentHeader: '<b>Легендарный мототрек</b>',
+        balloonContentBody: 'Парк Сосновка. Эпицентр гонок и спортивных эмоций.'
+    }, { preset: 'islands#redIcon' });
 
-      var markPoint9 = new ymaps.Placemark([60.022283, 30.338513], {
-          balloonContentHeader: '<b>Всесоюзное стрельбище</b>',
-          balloonContentBody: 'Парк Сосновка. Лучший стрелковый комплекс в СССР.'
-      }, { preset: 'islands#redIcon' });
+    var markPoint9 = new ymaps.Placemark([60.022283, 30.338513], {
+        balloonContentHeader: '<b>Всесоюзное стрельбище</b>',
+        balloonContentBody: 'Парк Сосновка. Лучший стрелковый комплекс в СССР.'
+    }, { preset: 'islands#redIcon' });
 
-      var markPoint10 = new ymaps.Placemark([60.026051, 30.324905], {
-          balloonContentHeader: '<b>Дача А. Ф. Толстого</b>',
-          balloonContentBody: 'пр. Тореза, 89. Особняк правнука фельдмаршала Кутузова.'
-      }, { preset: 'islands#redIcon' });
-      
-      var markPoint11 = new ymaps.Placemark([60.029818, 30.320637], {
-          balloonContentHeader: '<b>Дача доктора Бадмаева</b>',
-          balloonContentBody: 'пр. Тореза, 101. Особняк с восточной башенкой на Поклонной горе.'
-      }, { preset: 'islands#redIcon' });
+    var markPoint10 = new ymaps.Placemark([60.026051, 30.324905], {
+        balloonContentHeader: '<b>Дача А. Ф. Толстого</b>',
+        balloonContentBody: 'пр. Тореза, 89. Особняк правнука фельдмаршала Кутузова.'
+    }, { preset: 'islands#redIcon' });
+    
+    var markPoint11 = new ymaps.Placemark([60.029818, 30.320637], {
+        balloonContentHeader: '<b>Дача доктора Бадмаева</b>',
+        balloonContentBody: 'пр. Тореза, 101. Особняк с восточной башенкой на Поклонной горе.'
+    }, { preset: 'islands#redIcon' });
 
-      // Добавляем все 11 точек на карту
-      myMap.geoObjects
-          .add(markPoint1)
-          .add(markPoint2)
-          .add(markPoint3)
-          .add(markPoint4)
-          .add(markPoint5)
-          .add(markPoint6)
-          .add(markPoint7)
-          .add(markPoint8)
-          .add(markPoint9)
-          .add(markPoint10)
-          .add(markPoint11);
-  }
+    // Добавляем все 11 точек на карту
+    myMap.geoObjects
+        .add(markPoint1)
+        .add(markPoint2)
+        .add(markPoint3)
+        .add(markPoint4)
+        .add(markPoint5)
+        .add(markPoint6)
+        .add(markPoint7)
+        .add(markPoint8)
+        .add(markPoint9)
+        .add(markPoint10)
+        .add(markPoint11);
+}
 
     function scrollCarousel(carouselId, distance) {
         const carousel = document.getElementById(carouselId);
